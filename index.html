@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>台灣數位帳戶比較｜2026年7月</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="home-header">
+  <div class="wide-container">
+    <div class="masthead">
+      <div>
+        <div class="eyebrow">TAIWAN DIGITAL BANKING · JULY 2026</div>
+        <h1>台灣數位帳戶比較</h1>
+        <p>比較新戶與既有戶利率、分層額度、任務條件、付息方式與跨行優惠。</p>
+      </div>
+      <div class="masthead-meta">
+        <span>查核日 <span data-report-date>載入中…</span></span>
+        <span>官方頁與活動辦法優先</span>
+        <span>第三方補值醒目標示</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wide-container">
+  <div class="home-layout">
+    <div class="home-main">
+      <section class="content-card">
+        <div class="section-heading">
+          <div><div class="section-kicker">RATE RANKING</div><h2>新戶與既有戶利率排行</h2></div>
+          <p>每家銀行同時顯示兩條利率柱；橘色斜紋代表第三方暫補、尚未由官方確認。</p>
+        </div>
+        <div id="barList" class="bar-list"></div>
+      </section>
+
+      <section class="content-card">
+        <div class="section-heading">
+          <div><div class="section-kicker">FULL COMPARISON</div><h2>完整比較資料</h2></div>
+          <p>點擊銀行名稱可查看利率級距、有效利率曲線、資格任務、付息規則與來源。</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>#</th><th>銀行／帳戶</th><th>新戶最高</th><th>既有戶最高</th>
+              <th>級距／摘要</th><th>條件</th><th>促銷期間</th><th>計息／付息</th>
+              <th>跨轉</th><th>跨提</th><th>本期變動</th><th>來源</th>
+            </tr></thead>
+            <tbody id="comparisonBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <aside class="home-sidebar">
+      <section class="tool-card">
+        <div class="tool-card-title"><span>比較工具</span><small>同步控制排行與表格</small></div>
+        <div class="segmented">
+          <button type="button" data-sort-mode="new" class="active">新戶排序</button>
+          <button type="button" data-sort-mode="existing">既有戶排序</button>
+        </div>
+        <div class="field">
+          <label for="bankSearch">搜尋</label>
+          <input id="bankSearch" type="search" placeholder="銀行、無上限、跨轉…">
+        </div>
+        <div class="filter-grid">
+          <div class="field">
+            <label for="verificationFilter">資料狀態</label>
+            <select id="verificationFilter">
+              <option value="all">全部</option>
+              <option value="official">官方確認</option>
+              <option value="third-party">含第三方補值</option>
+              <option value="incomplete">官方資料不完整</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="minRate">最低利率</label>
+            <select id="minRate">
+              <option value="0">不限</option><option value="1">1% 以上</option>
+              <option value="1.5">1.5% 以上</option><option value="2">2% 以上</option>
+              <option value="3">3% 以上</option><option value="5">5% 以上</option>
+            </select>
+          </div>
+        </div>
+        <label class="check-field"><input id="tieredOnly" type="checkbox"><span>只看分層利率</span></label>
+        <button id="resetFilters" class="reset-btn" type="button">重設篩選</button>
+        <div class="result-line">依 <strong id="currentSortLabel">新戶最高利率</strong> 排序<br>顯示 <span id="resultCount" class="result-count"></span></div>
+      </section>
+
+      <section class="info-card">
+        <h3>圖表標示</h3>
+        <div class="legend-list">
+          <div class="legend-row"><span class="dot new"></span>新戶最高利率</div>
+          <div class="legend-row"><span class="dot existing"></span>既有戶最高利率</div>
+          <div class="legend-row"><span class="rate-source official">官方確認</span></div>
+          <div class="legend-row"><span class="rate-source third">第三方・未驗證</span></div>
+        </div>
+      </section>
+
+      <section class="info-card">
+        <h3>資料原則</h3>
+        <p>先搜尋銀行官方網域、優惠頁、新聞稿、附件及活動辦法 PDF；只有官方仍找不到明確數字時才使用第三方補值。</p>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<footer class="wide-container home-footer">離線靜態網站；外部來源連結需要網路才能開啟。</footer>
+<script type="module" src="assets/index.js"></script>
+</body>
+</html>

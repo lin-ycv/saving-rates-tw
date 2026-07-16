@@ -1,0 +1,1493 @@
+{
+  "schema_version": 1,
+  "report_date": "2026-07-16",
+  "site": {
+    "title": "台灣數位帳戶比較",
+    "language": "zh-Hant-TW",
+    "description": "比較台灣數位帳戶的新戶與既有戶利率、級距、條件、付息方式與跨行優惠。"
+  },
+  "banks": [
+    {
+      "name": "華南 SnY",
+      "slug": "hncb-sny",
+      "status": "已確認",
+      "new_rate_value": 2.3,
+      "existing_rate_value": 2.3,
+      "new_rate_text": "2.3%",
+      "existing_rate_text": "2.3%",
+      "general_rate": "超過10萬元部分依華南銀行新臺幣活期儲蓄存款或證券戶活儲牌告利率計息",
+      "promo_summary": "新舊戶適用同一套任務制：10萬元內目前年利率2.3%。",
+      "tier_summary": "0～10萬元：2.3%；超過10萬元：依帳戶性質按華南銀行牌告利率。",
+      "limit": "新臺幣10萬元",
+      "conditions": "持有效台幣SnY個人數位存款帳戶；當月完成以下任一項，次月1日至次月底享優惠：①台幣SnY月底餘額達1萬元；②外幣SnY月底美元餘額達300美元；③指定電子支付綁定台幣SnY，當月消費扣款累積達888元（含繳費、繳稅）；④華南銀行＋App「華銀支付」綁定SnY，當月消費扣款累積達888元（含繳費、繳稅）。",
+      "period": "優惠期間：2026-01-01～2026-12-31；自2025-12-01起完成任務者，次月適用",
+      "interest": "按每日最終餘額計息，100元起息；每月21日付息。優惠利率為牌告機動利率加碼1.445%，目前合計2.3%。",
+      "transfer": "20次／月；限個人網銀及華南銀行＋App，單筆200萬元以下；不含ATM、網路ATM及進階通匯／FXML",
+      "withdraw": "10次／月；使用ATM跨行提款",
+      "benefits": "另有外幣、行動支付及華南永昌證券一鍵雙開戶等數位服務。",
+      "change": "由「部分確認」修正為「已確認」；補齊10萬元額度、四選一任務、跨轉20次、跨提10次及付息資訊。",
+      "notes": "2026年方案不區分新戶與舊戶利率；均需逐月完成任一任務，次月取得優惠。",
+      "sources": [
+        {
+          "label": "華南銀行 SnY 115年度專屬優惠頁",
+          "url": "https://www.hncb.com.tw/wps/portal/HNCB/msg/co-management/pb-best-offer/c1/t1/SnY"
+        },
+        {
+          "label": "115年度台幣SnY數位帳戶優惠活動辦法 PDF",
+          "url": "https://www.hncb.com.tw/wps/wcm/connect/30403cc6-14f1-42d7-a429-dc99f23e3a4a/115%E5%B9%B4%E5%BA%A6%E5%8F%B0%E5%B9%A3SnY%E6%95%B8%E4%BD%8D%E5%B8%B3%E6%88%B6%E5%84%AA%E6%83%A0%E6%B4%BB%E5%8B%95%E8%BE%A6%E6%B3%95%28%E6%96%B0%29.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-30403cc6-14f1-42d7-a429-dc99f23e3a4a-pHJxCPo"
+        },
+        {
+          "label": "華南銀行官方新聞：SnY出任務享2.3%",
+          "url": "https://card.hncb.com.tw/wps/portal/HNCB/msg/co-management/pb-latest-news/c2/055-1141222/"
+        },
+        {
+          "label": "華南銀行新臺幣存款利率",
+          "url": "https://www.hncb.com.tw/wps/portal/HNCB/per_finance/query_saving_rate_all/query_ntd_rate"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "2026年新舊戶共同方案",
+          "description": "優惠額度為10萬元；超過10萬元部分回到帳戶適用的牌告利率。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～10萬元",
+              "range_amount": 100000,
+              "rate": 2.3,
+              "note": "當月完成四項任務之一，次月適用"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "王道 O-Bank",
+      "slug": "obank",
+      "status": "已確認",
+      "new_rate_value": 12.0,
+      "existing_rate_value": 2.1,
+      "new_rate_text": "最高 12%",
+      "existing_rate_text": "舊戶新資金最高 2.1%",
+      "general_rate": "超過優惠額度部分按王道銀行活期儲蓄存款牌告利率",
+      "promo_summary": "新戶：前10萬元12%、10萬～20萬元2.1%；舊戶新資金：20萬元內2.1%、20萬～100萬元1.5%。",
+      "tier_summary": "新戶：0～10萬元12%、10萬～20萬元2.1%；舊戶新資金：0～20萬元2.1%、20萬～100萬元1.5%；超過各方案上限按牌告利率。",
+      "limit": "1～10萬元：12%；10萬～20萬元：2.1%",
+      "conditions": "新戶：2026/7/1～9/30首次成功開立帳戶，12%適用開戶後指定一個月。舊戶新資金：2026/7/1～12/30 20:00，首次以他行帳戶單筆跨行轉入至少5萬元，自次一營業日起享6個月分層優惠。",
+      "period": "新戶開戶：2026-07-01～2026-09-30；舊戶新資金登錄／轉入：2026-07-01～2026-12-30 20:00，符合後享6個月。",
+      "interest": "按日單利；每月付息，原則於每月21日入帳，遇假日依官方規則調整至前一營業日。",
+      "transfer": "10 次／月；含網銀與 ATM，ATM 跨轉最多使用 5 次",
+      "withdraw": "3 次／月；需前月平均資產達新臺幣 2 萬元",
+      "benefits": "金融卡一般消費回饋、外幣、基金與旅遊保險等整合服務。",
+      "change": "舊戶利率由第三方暫補改為官方確認：20萬元內2.1%、20萬～100萬元1.5%。",
+      "notes": "另有舊戶新資金方案，2026-07-01～2026-12-30 20:00，符合單筆跨行轉入 5 萬元等條件後可享分層利率，但本次未完整取得全數現行百分比。",
+      "sources": [
+        {
+          "label": "王道銀行新戶 12% 官方活動頁",
+          "url": "https://www.o-bank.com/web/event/cm_108022801/index.html"
+        },
+        {
+          "label": "王道銀行個人金融首頁",
+          "url": "https://www.o-bank.com/retail"
+        },
+        {
+          "label": "王道銀行舊戶新資金官方活動頁",
+          "url": "https://www.o-bank.com/web/event/cm_integration_page/index.html"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "新戶優惠級距",
+          "description": "前 10 萬元利率極高，若存滿 20 萬元，整體加權平均約為 7.05%。",
+          "tiers": [
+            {
+              "range_label": "0～10萬元",
+              "range_amount": 100000,
+              "rate": 12.0,
+              "note": "開戶後指定一個月"
+            },
+            {
+              "range_label": "10萬～20萬元",
+              "range_amount": 100000,
+              "rate": 2.1,
+              "note": "第二級距"
+            }
+          ]
+        },
+        {
+          "label": "舊戶新資金方案",
+          "description": "首次單筆跨行轉入至少5萬元後，自次一營業日起享6個月分層利率。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～20萬元",
+              "range_amount": 200000,
+              "rate": 2.1,
+              "note": "官方舊戶新資金第一級距"
+            },
+            {
+              "range_label": "20萬～100萬元",
+              "range_amount": 800000,
+              "rate": 1.5,
+              "note": "官方舊戶新資金第二級距"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "富邦 數位帳戶",
+      "slug": "fubon-digital",
+      "status": "已確認",
+      "new_rate_value": 8.0,
+      "existing_rate_value": 1.6,
+      "new_rate_text": "最高 8%",
+      "existing_rate_text": "既有戶定向活動最高 1.6%",
+      "general_rate": "超過 20 萬元部分按台北富邦活期儲蓄存款牌告利率",
+      "promo_summary": "新戶：0～15萬元1%、15萬～20萬元8%；符合定向條件的既有戶，分層最高1.6%。",
+      "tier_summary": "新戶：0～15萬元1%、15萬～20萬元8%。既有戶定向活動依近三月平均存款分組，牌告0.695%、1.2%、最高1.6%。",
+      "limit": "優惠總額度 20 萬元",
+      "conditions": "新戶：從未持有台北富邦有效存款帳戶，開戶成功後享180天。既有戶定向活動：近三月月底平均台外幣存款介於30萬（不含）至90萬元（含）、2025/11/1以前開戶、近六個月曾登入Fubon+、2026/4未簽署指定投資文件，且帳戶未享其他台幣活儲優利；7/31前完成投資偏好測驗可延續至活動結束。",
+      "period": "新戶：2026-05-28～2026-12-31（開戶日起180天）；既有戶定向活動：2026-06-01～2026-09-30。",
+      "interest": "依每日帳戶日終餘額按日分層計息；每日餘額未達5,000元不計息；每半年付息，付息日為6月21日及12月21日，例假日亦同。",
+      "transfer": "基本 5 次／月；完成指定換匯、資產、繳費或消費任務可再增加，最高額外 7 次",
+      "withdraw": "5 次／月",
+      "benefits": "另有日圓活存 2%、美元最高 1.8% 等外幣優惠。",
+      "change": "既有戶由第三方基礎利率改為官方定向活動最高1.6%；補齊按日計息、5,000元起息及6/21、12/21付息。",
+      "notes": "高利區間採分層計息，應特別留意前 15 萬元僅為 1%。",
+      "sources": [
+        {
+          "label": "台北富邦數位帳戶官方頁",
+          "url": "https://www.fubon.com/banking/personal/deposit/digital_saving/digital_saving.htm"
+        },
+        {
+          "label": "富邦既有戶台幣活儲優利加碼活動",
+          "url": "https://www.fubon.com/banking/news/digitalService/news20260601.htm"
+        },
+        {
+          "label": "台北富邦臺幣存款利率",
+          "url": "https://www.fubon.com/banking/accessible/TWDRate.html"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "新戶優惠級距",
+          "description": "若存滿 20 萬元，整體加權平均約為 2.75%。高利 8% 只落在最後 5 萬元。",
+          "tiers": [
+            {
+              "range_label": "0～15萬元",
+              "range_amount": 150000,
+              "rate": 1.0,
+              "note": "第一級距"
+            },
+            {
+              "range_label": "15萬～20萬元",
+              "range_amount": 50000,
+              "rate": 8.0,
+              "note": "高利區段"
+            }
+          ]
+        },
+        {
+          "label": "既有戶定向活動：近三月平均30～60萬元",
+          "description": "官方表格第一組：前30萬元按牌告0.695%，30萬～60萬元1.2%，60萬～90萬元1.6%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～30萬元",
+              "range_amount": 300000,
+              "rate": 0.695,
+              "note": "牌告利率"
+            },
+            {
+              "range_label": "30萬～60萬元",
+              "range_amount": 300000,
+              "rate": 1.2,
+              "note": "定向優惠第二級距"
+            },
+            {
+              "range_label": "60萬～90萬元",
+              "range_amount": 300000,
+              "rate": 1.6,
+              "note": "定向優惠最高級距"
+            }
+          ]
+        },
+        {
+          "label": "既有戶定向活動：官方第二組表格",
+          "description": "官方頁第二組門檻標題文字疑似重複；以下依其表格數值呈現。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～60萬元",
+              "range_amount": 600000,
+              "rate": 0.695,
+              "note": "牌告利率"
+            },
+            {
+              "range_label": "60萬～90萬元",
+              "range_amount": 300000,
+              "rate": 1.2,
+              "note": "定向優惠第二級距"
+            },
+            {
+              "range_label": "90萬～120萬元",
+              "range_amount": 300000,
+              "rate": 1.6,
+              "note": "定向優惠最高級距"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "一銀 iLEO",
+      "slug": "firstbank-ileo",
+      "status": "已確認",
+      "new_rate_value": 2.0,
+      "existing_rate_value": 2.0,
+      "new_rate_text": "2%",
+      "existing_rate_text": "2%",
+      "general_rate": "0.855%（第一銀行一般活期儲蓄存款牌告）",
+      "promo_summary": "12 萬元內 2%。",
+      "tier_summary": "12萬元內 2%；超過部分按牌告利率。",
+      "limit": "12 萬元",
+      "conditions": "持有 iLEO 數位帳戶；官方頁未列額外月任務。",
+      "period": "即日起～2026-12-31",
+      "interest": "依適用利率計息；活期／活期儲蓄存款於每年6月20日及12月20日各結算一次，於次日自動轉入帳戶。",
+      "transfer": "10 次／月（自動化通路）",
+      "withdraw": "10 次／月（自動化通路）",
+      "benefits": "整合第一銀行外幣、基金、臺灣Pay 與其他數位金融服務。",
+      "change": "補齊官方存款約定書所載：6/20、12/20結息，次日入帳。",
+      "notes": "牌告利率依第一銀行 2026-03-02 起實施的官方利率表。",
+      "sources": [
+        {
+          "label": "iLEO 官方入口",
+          "url": "https://ibank.firstbank.com.tw/NetBank/DigAMA/LandingPage/index.html?ch=&cp=&em="
+        },
+        {
+          "label": "第一銀行官方新臺幣存款牌告利率表",
+          "url": "https://www.firstbank.com.tw/sites/fcb/files/1565710931096"
+        },
+        {
+          "label": "第一銀行存款業務約定書 PDF",
+          "url": "https://www.firstbank.com.tw/sites/fcb/files/1565683064337"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "iLEO優惠級距",
+          "description": "前12萬元享2%；第二段以再增加12萬元示意，超過優惠額度部分按一般活期儲蓄存款牌告0.855%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～12萬元",
+              "range_amount": 120000,
+              "rate": 2.0,
+              "note": "優惠額度"
+            },
+            {
+              "range_label": "12萬～24萬元（示意）",
+              "range_amount": 120000,
+              "rate": 0.855,
+              "note": "超額部分按牌告利率"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "聯邦 New New",
+      "slug": "newnewbank",
+      "status": "已確認",
+      "new_rate_value": 10.0,
+      "existing_rate_value": 3.0,
+      "new_rate_text": "新戶最高 10%",
+      "existing_rate_text": "舊戶最高 3%",
+      "general_rate": "超過優惠額度部分按聯邦銀行一般活期儲蓄存款牌告利率",
+      "promo_summary": "新戶 10%；舊戶基本 1.5%、完成任一指定任務最高 3%。",
+      "tier_summary": "新戶：15萬元內 10%；舊戶：40萬元內 1.5%／3%。",
+      "limit": "新戶 15 萬元；舊戶 40 萬元",
+      "conditions": "新戶為 2026-07-01～12-31 首次開戶；舊戶逐月完成證券定期定額 3 筆、成功推薦 2 名新戶或金融卡消費滿 1 萬元任一項，可達 3%。",
+      "period": "計息活動：2026-07-21～2027-01-20；新戶開戶：2026-07-01～2026-12-31",
+      "interest": "每月 20 日結息，計算前月 21 日至當月 20 日；牌告利息預定 21 日入帳，加碼差額於其後 3 個營業日內入帳。",
+      "transfer": "10 次／月",
+      "withdraw": "10 次／月",
+      "benefits": "可串聯聯邦證券定期定額、推薦開戶與一卡通 Debit 卡。",
+      "change": "上半年 15% 方案已結束；2026 下半年官方現行新戶方案為 10%。",
+      "notes": "新戶 10% 只適用成功開戶後的次一月份利息結算期間，之後轉為舊戶規則。",
+      "sources": [
+        {
+          "label": "New New Bank 活儲專案",
+          "url": "https://newnewbank.com.tw/deposits.htm?openExternalBrowser=1"
+        },
+        {
+          "label": "New New Bank 官方首頁",
+          "url": "https://newnewbank.com.tw/"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "新戶方案",
+          "description": "新戶於指定的一次結息期間，15萬元內適用10%。圖中只呈現官方優惠額度，超額部分未納入。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～15萬元",
+              "range_amount": 150000,
+              "rate": 10.0,
+              "note": "新戶一次結息期間"
+            }
+          ]
+        },
+        {
+          "label": "舊戶完成任務",
+          "description": "舊戶完成任一指定任務，40萬元內最高3%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～40萬元",
+              "range_amount": 400000,
+              "rate": 3.0,
+              "note": "完成任務最高利率"
+            }
+          ]
+        },
+        {
+          "label": "舊戶未完成任務",
+          "description": "舊戶未完成加碼任務時，40萬元內基本利率1.5%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～40萬元",
+              "range_amount": 400000,
+              "rate": 1.5,
+              "note": "舊戶基本利率"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "上海 Cloud Bank",
+      "slug": "scsb-cloudbank",
+      "status": "已確認",
+      "new_rate_value": 2.085,
+      "existing_rate_value": 2.085,
+      "new_rate_text": "2.085%",
+      "existing_rate_text": "2.085%",
+      "general_rate": "超過優惠額度部分按上海銀行一般活期儲蓄存款牌告利率",
+      "promo_summary": "目前 2.085%（一年期定期儲蓄存款機動利率 +0.36%）。",
+      "tier_summary": "20萬元內 2.085%；符合指定條件次月提高至 30 萬元。",
+      "limit": "基本 20 萬元；符合指定條件次月提高至 30 萬元",
+      "conditions": "前月最後營業日設定上海銀行信用卡自動扣繳，或美元活存餘額達 1,000 美元，可提高優惠額度。",
+      "period": "2026-01-01～2026-12-31",
+      "interest": "按日計息；新臺幣起息點 1 萬元、計息單位 100 元；每年 6 月 20 日與 12 月 20 日結息，次一營業日滾入本金。",
+      "transfer": "與跨提合計基本 10 次／月；前月小小兵 Debit 一般消費滿 5,000 元可提高至 15 次",
+      "withdraw": "與跨轉合計基本 10 次／月；符合消費條件提高至 15 次",
+      "benefits": "美元、人民幣活存優惠，以及外幣與投資相關優惠。",
+      "change": "本期建立官方查核基準。",
+      "notes": "免費次數為跨轉與跨提合併計算，不是各自 10 或 15 次。",
+      "sources": [
+        {
+          "label": "上海銀行 Cloud Bank 官方頁",
+          "url": "https://apply.scsb.com.tw/content/cloudbank/index.html"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "基本優惠額度",
+          "description": "未達提高額度條件時，20萬元內適用2.085%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～20萬元",
+              "range_amount": 200000,
+              "rate": 2.085,
+              "note": "基本優惠額度"
+            }
+          ]
+        },
+        {
+          "label": "提高優惠額度",
+          "description": "符合信用卡自動扣繳或美元餘額條件後，次月30萬元內適用2.085%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～30萬元",
+              "range_amount": 300000,
+              "rate": 2.085,
+              "note": "符合條件後提高額度"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "臺銀 數位帳戶",
+      "slug": "bot-digital",
+      "status": "部分確認",
+      "new_rate_value": 2.075,
+      "existing_rate_value": 2.075,
+      "new_rate_text": "2.075%",
+      "existing_rate_text": "2.075%",
+      "general_rate": "10萬元以上部分按臺灣銀行活期儲蓄存款牌告利率0.825%",
+      "promo_summary": "官方頁顯示 2.075%。",
+      "tier_summary": "0～10萬元2.075%；超過10萬元部分0.825%（依現行牌告，牌告變動時隨之調整）。",
+      "limit": "新臺幣10萬元",
+      "conditions": "持有臺灣銀行新臺幣數位存款帳戶；2026年度10萬元內適用一年期一般機動定儲利率＋0.36%。",
+      "period": "2026-01-01～2026-12-31",
+      "interest": "按日計息；每月20日結息一次，於次日轉入本金。",
+      "transfer": "網銀跨行轉帳 99 次／月；官方摘要另載『每月各 10 次』，推定涉及 ATM 跨轉／跨提，請以頁內辦法為準",
+      "withdraw": "官方摘要載每月 10 次；適用通路與完整限制需查看活動辦法",
+      "benefits": "另有美元匯率減碼與金融卡相關優惠。",
+      "change": "補齊10萬元額度、超額0.825%牌告利率及每月20日結息／21日入帳。",
+      "notes": "官方頁為動態活動頁，部分關鍵欄位無法在本次可讀文字中擷取。",
+      "sources": [
+        {
+          "label": "臺銀數位帳戶官方活動",
+          "url": "https://event.bot.com.tw/digital-deposit/campaign/6"
+        },
+        {
+          "label": "臺銀數位帳戶入口",
+          "url": "https://event.bot.com.tw/digital-deposit/index"
+        },
+        {
+          "label": "臺灣銀行新臺幣存放款牌告利率",
+          "url": "https://rate.bot.com.tw/twd?Lang=zh-TW"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "2026年數位帳戶級距",
+          "description": "第二段以再增加10萬元示意；實際超過10萬元的全部金額均按當期活期儲蓄存款牌告利率。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～10萬元",
+              "range_amount": 100000,
+              "rate": 2.075,
+              "note": "數位帳戶優惠額度"
+            },
+            {
+              "range_label": "10萬～20萬元（示意）",
+              "range_amount": 100000,
+              "rate": 0.825,
+              "note": "超額部分按現行牌告利率"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "兆豐 MegaLite",
+      "slug": "mega-megalite",
+      "status": "已確認",
+      "new_rate_value": 1.2,
+      "existing_rate_value": 1.2,
+      "new_rate_text": "官方公式：牌告活儲＋0.395%；第三方換算約1.2%",
+      "existing_rate_text": "官方公式：牌告活儲＋0.395%；第三方換算約1.2%",
+      "general_rate": "超過 10 萬元部分按兆豐銀行一般活期儲蓄存款牌告利率",
+      "promo_summary": "10萬元內按兆豐活期儲蓄存款機動利率＋0.395%；固定約1.2%為第三方依當期牌告換算。",
+      "tier_summary": "10萬元內適用公式型利率；超過部分按牌告利率。",
+      "limit": "10 萬元",
+      "conditions": "持有 MegaLite 新臺幣數位存款帳戶。",
+      "period": "2026-01-01～2026-12-31",
+      "interest": "每日最終餘額100元起息，以百元為計息單位；按日計息，每月20日結算，次日付息至原帳戶。",
+      "transfer": "10 次／月；符合指定外幣換匯可於次月增加，最多再加 10 次",
+      "withdraw": "10 次／月",
+      "benefits": "18 種外幣、基金小額投資與指定投資手續費優惠。",
+      "change": "補強官方公式、100元起息及每月20日結息／21日付息；固定百分比仍待官方動態牌告表確認。",
+      "notes": "優惠利率會隨一般活儲機動牌告利率變動。",
+      "sources": [
+        {
+          "label": "兆豐 MegaLite 官方活動頁",
+          "url": "https://wwwfile.megabank.com.tw/event/megalite/"
+        },
+        {
+          "label": "兆豐臺幣存放款利率",
+          "url": "https://www.megabank.com.tw/personal/savings/deposit-service/rate/twd-rate"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "MegaLite優惠額度",
+          "description": "官方以「牌告活儲利率＋0.395%」表示；圖中約1.2%為第三方依當期牌告換算，10萬元內適用。",
+          "verified": false,
+          "tiers": [
+            {
+              "range_label": "0～10萬元",
+              "range_amount": 100000,
+              "rate": 1.2,
+              "note": "固定百分比為第三方換算"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": false,
+      "existing_rate_verified": false,
+      "third_party_note": "官方頁以「一般活儲機動利率＋0.395%」呈現；固定1.2%為第三方依當時牌告換算，牌告變動時會跟著改變。",
+      "third_party_sources": [
+        {
+          "label": "這就是人生：2026 下半年數位帳戶比較（第三方）",
+          "url": "https://www.beurlife.com/2018/11/best-digital-bank-deposit-fund-pay.html"
+        },
+        {
+          "label": "HankExploring：MegaLite 2026 整理（第三方）",
+          "url": "https://www.hankexploring.com/megalite/"
+        }
+      ]
+    },
+    {
+      "name": "臺灣企銀 Hokii",
+      "slug": "tbb-hokii",
+      "status": "已確認",
+      "new_rate_value": 3.0,
+      "existing_rate_value": 2.8,
+      "new_rate_text": "新戶最高 3%",
+      "existing_rate_text": "舊戶最高 2.8%",
+      "general_rate": "超過 15 萬元部分按臺灣企銀一般活期儲蓄存款牌告利率",
+      "promo_summary": "新戶基本 2.1%、最高 3%；舊戶基本 1.9%、最高 2.8%。",
+      "tier_summary": "15萬元內；透過四項任務加碼至最高 3%／2.8%。",
+      "limit": "15 萬元",
+      "conditions": "每月任務：18 日帳戶餘額達 25 萬元 +0.3%；臺灣Pay 消費滿 800 元 +0.2%；線上換匯滿 8,000 元 +0.2%；臺企銀信用卡消費滿 6,000 元 +0.2%。",
+      "period": "2026-01-01～2026-12-31",
+      "interest": "按日計息、1 元起息；每月 21 日付息。",
+      "transfer": "20 次／月",
+      "withdraw": "12 次／月",
+      "benefits": "臺灣Pay、線上換匯、信用卡與外幣相關數位優惠。",
+      "change": "本期建立官方查核基準。",
+      "notes": "四項任務全部完成時加碼 0.9 個百分點。",
+      "sources": [
+        {
+          "label": "Hokii 數位帳戶官方頁",
+          "url": "https://www.tbb.com.tw/zh-tw/digital/hokii/digital-account/intro"
+        },
+        {
+          "label": "臺企銀 2026 Hokii 官方新聞稿",
+          "url": "https://www.tbb.com.tw/zh-tw/about/information/announcement/news/press-announcements/20260122"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "新戶完成全部任務",
+          "description": "新戶基本2.1%，完成四項任務可加碼至3%；本圖呈現最高情境。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～15萬元",
+              "range_amount": 150000,
+              "rate": 3.0,
+              "note": "新戶最高情境"
+            }
+          ]
+        },
+        {
+          "label": "新戶基本利率",
+          "description": "新戶未完成加碼任務時，15萬元內為2.1%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～15萬元",
+              "range_amount": 150000,
+              "rate": 2.1,
+              "note": "新戶基本利率"
+            }
+          ]
+        },
+        {
+          "label": "既有戶完成全部任務",
+          "description": "既有戶基本1.9%，完成四項任務可加碼至2.8%；本圖呈現最高情境。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～15萬元",
+              "range_amount": 150000,
+              "rate": 2.8,
+              "note": "既有戶最高情境"
+            }
+          ]
+        },
+        {
+          "label": "既有戶基本利率",
+          "description": "既有戶未完成加碼任務時，15萬元內為1.9%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～15萬元",
+              "range_amount": 150000,
+              "rate": 1.9,
+              "note": "既有戶基本利率"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "土銀 數位帳戶",
+      "slug": "landbank-digital",
+      "status": "已確認",
+      "new_rate_value": 1.94,
+      "existing_rate_value": 1.94,
+      "new_rate_text": "1.94%",
+      "existing_rate_text": "1.94%",
+      "general_rate": "超過 10 萬元部分按土地銀行一般活期儲蓄存款牌告利率",
+      "promo_summary": "目前 1.94%（一年期一般定期儲蓄存款機動利率 +0.215%）。",
+      "tier_summary": "10萬元內 1.94%；超過部分按牌告利率。",
+      "limit": "10 萬元",
+      "conditions": "持有土地銀行新臺幣數位存款帳戶。",
+      "period": "官方頁 2026-01-16 更新；未列固定結束日，依公告調整",
+      "interest": "按每日最終餘額計息，5,000元起息、以百元為計息單位；按月給付利息。本次查得的官方專案頁未載固定入帳日。",
+      "transfer": "10 次／月（個人網銀、WebATM、ATM）",
+      "withdraw": "5 次／月",
+      "benefits": "臺灣Pay／行動支付指定消費 1.5% 回饋點數，每月上限 1,000 點。",
+      "change": "補齊按月給付利息；固定入帳日仍未在官方專案頁查得。",
+      "notes": "利率採公式連動，因此 1.94% 可能隨基準牌告調整。",
+      "sources": [
+        {
+          "label": "土地銀行數位帳戶官方公告",
+          "url": "https://www.landbank.com.tw/Bulletin/Detail/4827b4f2-618c-436c-968d-ac9200a45092?code=H300"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "數位帳戶優惠級距",
+          "description": "10萬元內目前約1.94%；圖中只呈現官方優惠額度。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～10萬元",
+              "range_amount": 100000,
+              "rate": 1.94,
+              "note": "公式型優惠利率"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "彰銀 e財寶",
+      "slug": "chb-edigital",
+      "status": "已確認",
+      "new_rate_value": 2.5,
+      "existing_rate_value": 4.0,
+      "new_rate_text": "新戶 2.5%",
+      "existing_rate_text": "舊戶最高 4%",
+      "general_rate": "舊戶基本優惠為一般活儲牌告利率 +0.05%（10 萬元內）",
+      "promo_summary": "新戶 2.5%；舊戶完成條件可達 2% 或 4%。",
+      "tier_summary": "新戶：10萬元內 2.5%；舊戶：10萬元內最高 4%。",
+      "limit": "10 萬元",
+      "conditions": "新戶自次月 1 日起享 3 個月 2.5%；舊戶需達平均資產 20 萬或 40 萬元，並完成薪轉、美元餘額、換匯、貸款扣繳、基金扣款等 5 項中的 3 項，依級別享 2% 或 4%。",
+      "period": "2026-01-01～2026-12-31",
+      "interest": "牌告利率部分按日計息、每年 6 月 20 日與 12 月 20 日結息；優惠加碼利息依官方帳戶頁於次月 10 日前後撥付，實際依活動辦法。",
+      "transfer": "30 次／月",
+      "withdraw": "30 次／月",
+      "benefits": "外幣定存加碼、換匯、基金申購折扣及柴寶幣生態系。",
+      "change": "本期釐清新戶 2.5% 與舊戶最高 4% 為不同資格方案。",
+      "notes": "舊戶最高 4% 需同時達較高資產門檻並完成 3 項任務。",
+      "sources": [
+        {
+          "label": "彰銀 e財寶官方頁",
+          "url": "https://www.bankchb.com/frontend/Digitalaccount/index.html"
+        },
+        {
+          "label": "彰銀 e財寶官方活動頁",
+          "url": "https://www.bankchb.com/frontend/bonusDetail.jsp?id=3359"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "新戶方案",
+          "description": "新戶自次月1日起享3個月，10萬元內2.5%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～10萬元",
+              "range_amount": 100000,
+              "rate": 2.5,
+              "note": "新戶三個月"
+            }
+          ]
+        },
+        {
+          "label": "既有戶最高方案",
+          "description": "既有戶達較高資產門檻並完成指定任務，10萬元內最高4%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～10萬元",
+              "range_amount": 100000,
+              "rate": 4.0,
+              "note": "既有戶最高情境"
+            }
+          ]
+        },
+        {
+          "label": "既有戶次高方案",
+          "description": "既有戶符合較低一級資格時，10萬元內2%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～10萬元",
+              "range_amount": 100000,
+              "rate": 2.0,
+              "note": "既有戶次高情境"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "台新 Richart",
+      "slug": "richart",
+      "status": "已確認",
+      "new_rate_value": 3.5,
+      "existing_rate_value": 1.8,
+      "new_rate_text": "新戶 3.5%",
+      "existing_rate_text": "既有戶 1.8%",
+      "general_rate": "超過優惠額度部分按台新銀行活期儲蓄存款牌告利率",
+      "promo_summary": "符合資格新戶 3.5%；既有客戶完成任務 1.8%。",
+      "tier_summary": "新戶：30萬元內 3.5%；既有戶：100萬元內 1.8%。",
+      "limit": "新戶 30 萬元；既有客戶 100 萬元",
+      "conditions": "新戶為 2026-06-01 後開立主帳戶並開啟優利子帳戶；既有客戶須開啟優利子帳戶並完成資產、外幣、臺股定期定額或備援扣款帳戶任一任務。",
+      "period": "2026-07-02～2027-04-01",
+      "interest": "依每日最終餘額計息；每月底付息，若付息日遇假日則依官方規則提前至前一營業日。",
+      "transfer": "5 次／月",
+      "withdraw": "5 次／月",
+      "benefits": "最多 7 個子帳戶，並整合信用卡、證券、外幣與小額投資。",
+      "change": "2026-07-02 起採新一期方案：新戶 3.5% 額度 30 萬、舊戶 1.8% 額度 100 萬。",
+      "notes": "優惠適用於「優利子帳戶」，不是主帳戶全部餘額。",
+      "sources": [
+        {
+          "label": "Richart 優利子帳戶官方活動",
+          "url": "https://richart.tw/TSDIB_RichartWeb/discount/discount-details?discount=40"
+        },
+        {
+          "label": "Richart 官方首頁",
+          "url": "https://richart.tw/TSDIB_RichartWeb/RC00/RC000000"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "新戶優利子帳戶",
+          "description": "符合資格的新戶，優利子帳戶30萬元內3.5%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～30萬元",
+              "range_amount": 300000,
+              "rate": 3.5,
+              "note": "新戶優惠額度"
+            }
+          ]
+        },
+        {
+          "label": "既有戶優利子帳戶",
+          "description": "既有戶完成任一指定任務，優利子帳戶100萬元內1.8%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～100萬元",
+              "range_amount": 1000000,
+              "rate": 1.8,
+              "note": "既有戶優惠額度"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "永豐 大戶 DAWHO",
+      "slug": "dawho",
+      "status": "已確認",
+      "new_rate_value": 1.5,
+      "existing_rate_value": 1.5,
+      "new_rate_text": "1.5%",
+      "existing_rate_text": "1.5%",
+      "general_rate": "大大等級依永豐銀行一般活期儲蓄存款牌告利率",
+      "promo_summary": "大戶Plus／大戶：30萬元內1.5%；大大：按牌告利率。跨提＋跨轉合併次數依級別為30／20／5次。",
+      "tier_summary": "大戶Plus與大戶：0～30萬元1.5%，超過30萬元按牌告；大大全部按牌告。",
+      "limit": "30 萬元",
+      "conditions": "大戶Plus：當月平均財富達100萬元，且同月完成單筆換匯至少5,000元或一筆台股現貨交易，次月升等。大戶：當月符合任一條件，次月升等—新戶禮至次月底、平均財富30萬元、信貸授權扣款、符合資格新戶的一筆台股現貨交易，或單筆換匯至少5,000元。大大：未達前述條件。",
+      "period": "2026-07-01～2026-12-31",
+      "interest": "按日單利；每月 20 日結息、21 日入帳，遇假日依官方規則處理；1 元起息。",
+      "transfer": "跨行轉帳與提款合併計算：大戶Plus 30次／月、大戶20次／月、大大5次／月；優惠次數統計期間為當月16日至次月15日。",
+      "withdraw": "跨行轉帳與提款合併計算：大戶Plus 30次／月、大戶20次／月、大大5次／月；優惠次數統計期間為當月16日至次月15日。",
+      "benefits": "大戶Plus：大戶速匯每月1次免手續費、信用卡國內最高5%／國外最高6%、悠遊卡自動加值5%；大戶：專案期間首次速匯免手續費、信用卡國內最高3.5%／國外最高4.5%、自動加值3%；大大：信用卡國內1%／國外2%無上限。",
+      "change": "補齊大戶Plus／大戶／大大三級權益、升等任務、跨提轉合併次數統計期間及速匯／信用卡福利。",
+      "notes": "免費次數需依會員等級，兩種交易共用同一額度。",
+      "sources": [
+        {
+          "label": "DAWHO 活存官方說明",
+          "url": "https://dawho.tw/about/saving/"
+        },
+        {
+          "label": "DAWHO 官方首頁",
+          "url": "https://dawho.tw/"
+        },
+        {
+          "label": "DAWHO分級制度權益",
+          "url": "https://dawho.tw/about/memberloyalty/"
+        },
+        {
+          "label": "DAWHO分級制度升等攻略",
+          "url": "https://dawho.tw/about/dawholevel/"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "大戶Plus／大戶",
+          "description": "大戶Plus與大戶等級的台幣活存優惠相同：30萬元內1.5%。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～30萬元",
+              "range_amount": 300000,
+              "rate": 1.5,
+              "note": "大戶Plus／大戶"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "LINE Bank",
+      "slug": "linebank",
+      "status": "已確認",
+      "new_rate_value": 1.5,
+      "existing_rate_value": 1.5,
+      "new_rate_text": "1.5%",
+      "existing_rate_text": "1.5%",
+      "general_rate": "主帳戶超過口袋帳戶額度之資金依 LINE Bank 牌告或其他產品規則",
+      "promo_summary": "口袋帳戶 1.5%。",
+      "tier_summary": "口袋帳戶 50 萬元內 1.5%。",
+      "limit": "50 萬元",
+      "conditions": "新舊戶、新舊資金皆可；1 元起息。",
+      "period": "產品型優惠；官方新聞稿未列固定結束日",
+      "interest": "1元起息、按日計息、每月領息；官方公開產品頁與新聞稿未載固定日曆入帳日。",
+      "transfer": "最高 50 次／月",
+      "withdraw": "最高 8 次／月",
+      "benefits": "口袋帳戶彈性挪用、LINE 生態系轉帳、支付與證券整合。",
+      "change": "補齊1元起息、按日計息及每月領息；固定入帳日仍未查得。",
+      "notes": "「最高」免費次數可能受帳戶或活動資格限制，應以 APP 顯示為準。",
+      "sources": [
+        {
+          "label": "LINE Bank 口袋帳戶官方新聞稿",
+          "url": "https://corp.linebank.com.tw/news/e97e381d-d3fa-4234-845c-f09ec76f2f64"
+        },
+        {
+          "label": "LINE Bank 口袋帳戶產品頁",
+          "url": "https://www.linebank.com.tw/products/detail/01010010004/01"
+        },
+        {
+          "label": "LINE Bank 免費次數公告",
+          "url": "https://www.linebank.com.tw/notice/events/1192520"
+        },
+        {
+          "label": "LINE Bank產品總覽（口袋帳戶月月領息）",
+          "url": "https://www.linebank.com.tw/products"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "口袋帳戶",
+          "description": "口袋帳戶50萬元內1.5%，新舊戶及新舊資金皆可。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～50萬元",
+              "range_amount": 500000,
+              "rate": 1.5,
+              "note": "口袋帳戶上限"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "合庫 數位帳戶",
+      "slug": "tcb-digital",
+      "status": "已確認",
+      "new_rate_value": 1.5,
+      "existing_rate_value": 1.5,
+      "new_rate_text": "1.5%",
+      "existing_rate_text": "1.5%",
+      "general_rate": "超過 12 萬元部分按合作金庫一般活期儲蓄存款牌告利率",
+      "promo_summary": "12 萬元內 1.5%。",
+      "tier_summary": "12萬元內 1.5%；超過部分按牌告利率。",
+      "limit": "12 萬元",
+      "conditions": "持有合作金庫新臺幣數位存款帳戶。",
+      "period": "2026-01-01～2026-12-31",
+      "interest": "起息點 5,000 元、計息單位 1 元；每年 6 月 20 日與 12 月 20 日結息，次一營業日滾入本金。",
+      "transfer": "全新客戶開戶後 6 個月 16 次／月；既有客戶 6 次／月",
+      "withdraw": "全新客戶開戶後 6 個月 8 次／月；既有客戶 6 次／月",
+      "benefits": "換匯減碼、基金申購折扣；符合資格的新辦 Debit 卡一般消費加碼 1%，每月上限 100 元。",
+      "change": "本期建立官方查核基準。",
+      "notes": "全新客戶須開戶時在合庫沒有其他存款帳戶。",
+      "sources": [
+        {
+          "label": "合庫 115 年數位帳戶優惠",
+          "url": "https://www.tcb-bank.com.tw/personal-banking/deposit-exchange/twd-services/digital-demand-deposit/promotion-01"
+        },
+        {
+          "label": "合庫數位帳戶活儲專案",
+          "url": "https://www.tcb-bank.com.tw/personal-banking/deposit-exchange/twd-services/digital-demand-deposit/promotion-02"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "數位帳戶優惠級距",
+          "description": "12萬元內1.5%；圖中只呈現官方優惠額度。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～12萬元",
+              "range_amount": 120000,
+              "rate": 1.5,
+              "note": "優惠額度"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "高銀 雄Hoyaa",
+      "slug": "bok-hoyaa",
+      "status": "已確認",
+      "new_rate_value": 0.7,
+      "existing_rate_value": 0.7,
+      "new_rate_text": "0.7%",
+      "existing_rate_text": "0.7%",
+      "general_rate": "0.7%（高雄銀行活期儲蓄存款牌告，2026-07-14）",
+      "promo_summary": "2026 年沒有數位帳戶加碼；雄Hoyaa依活期儲蓄存款牌告利率 0.7% 計息。",
+      "tier_summary": "新舊戶皆按活期儲蓄存款牌告利率 0.7%。",
+      "limit": "依一般活期儲蓄存款規則；無數位帳戶加碼額度",
+      "conditions": "持有雄Hoyaa數位存款帳戶；無額外高利任務。",
+      "period": "現行牌告自 2026-07-14 生效；利率可隨牌告調整",
+      "interest": "依高雄銀行一般活期儲蓄存款規則計息；固定付息資訊本次未於數位帳戶FAQ查得。",
+      "transfer": "10 次／月",
+      "withdraw": "5 次／月",
+      "benefits": "保留數位帳戶跨行轉帳與提款免手續費次數。",
+      "change": "改以2026-07-14官方即時牌告確認：現行利率0.7%，無數位帳戶加碼。",
+      "notes": "舊年度2.1%／1.5%活動已到期，不作為2026現行方案。",
+      "sources": [
+        {
+          "label": "高雄銀行即時臺幣牌告利率",
+          "url": "https://ibank.bok.com.tw/PIB/ca/ca02101/CA02101_HOME.xhtml"
+        },
+        {
+          "label": "雄Hoyaa數位帳戶FAQ",
+          "url": "https://ssl.bok.com.tw/hoyaa/shqa.html"
+        },
+        {
+          "label": "雄Hoyaa官方入口",
+          "url": "https://ssl.bok.com.tw/hoyaa/Hoyaa.html"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "一般活儲牌告（示意範圍）",
+          "description": "雄Hoyaa目前沒有數位帳戶加碼，依0.7%牌告利率計息。因無優惠上限，X軸使用0～100萬元作為視覺示意，不代表計息上限。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～100萬元（示意）",
+              "range_amount": 1000000,
+              "rate": 0.7,
+              "note": "無優惠上限；X軸僅為示意"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "樂天 Rakuten",
+      "slug": "rakuten-bank",
+      "status": "部分確認",
+      "new_rate_value": 2.8,
+      "existing_rate_value": 1.5,
+      "new_rate_text": "新戶最高2.8%（官方活動總覽）",
+      "existing_rate_text": "完成任務次月1.5%無上限",
+      "general_rate": "未完成指定任務時依樂天國際銀行牌告利率",
+      "promo_summary": "新戶活動總覽標示開戶次日起活儲最高2.8%，至2026/7/31；既有／一般客戶完成指定任務後，次月1.5%無上限。",
+      "tier_summary": "新戶2.8%的完整本金級距尚未從官方動態活動頁取得；1.5%任務方案標示無金額上限。",
+      "limit": "新戶2.8%：官方總覽未揭露額度；任務1.5%：無上限",
+      "conditions": "新戶2.8%：活動總覽僅標示活動期間開戶次日起適用，詳細條件尚未取得。1.5%任務：當月完成5筆指定行動支付帳戶扣款，或將帳戶連結指定投資平台，次月適用。",
+      "period": "新戶最高2.8%：即日起～2026-07-31；1.5%任務方案：官方頁未顯示固定終止日",
+      "interest": "官方公開動態頁本次仍未取得活儲固定付息頻率及入帳日。",
+      "transfer": "依快樂會員等級提供優惠；官方動態頁本次仍未取得各級確切次數。",
+      "withdraw": "依快樂會員等級提供優惠；官方動態頁本次仍未取得各級確切次數。",
+      "benefits": "會員等級另含國內跨行與日本 ATM 優惠；可串聯基金與證券平台。",
+      "change": "新增官方活動總覽所列新戶最高2.8%；其額度、級距、付息及快樂會員各級次數仍待完整活動辦法。",
+      "notes": "使用者提供的連結為定存頁；本報告另引用官方優惠總覽查活存任務。",
+      "sources": [
+        {
+          "label": "樂天銀行優惠總覽",
+          "url": "https://www.rakuten-bank.com.tw/portal/campaign/overview"
+        },
+        {
+          "label": "樂天銀行官方首頁",
+          "url": "https://www.rakuten-bank.com.tw/portal/home"
+        },
+        {
+          "label": "使用者指定官方入口（定存頁）",
+          "url": "https://www.rakuten-bank.com.tw/portal/product/twd-time-deposit"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "新戶最高2.8%（額度未明）",
+          "description": "官方總覽已確認新戶最高2.8%，但未取得適用本金額度。X軸暫以10萬元示意，不代表官方上限，並列入缺漏稽核。",
+          "verified": false,
+          "tiers": [
+            {
+              "range_label": "0～10萬元（示意）",
+              "range_amount": 100000,
+              "rate": 2.8,
+              "note": "利率官方確認；本金範圍未確認"
+            }
+          ]
+        },
+        {
+          "label": "任務方案1.5%無上限",
+          "description": "完成指定任務次月享1.5%無上限。X軸以0～100萬元示意，不代表計息上限。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～100萬元（示意）",
+              "range_amount": 1000000,
+              "rate": 1.5,
+              "note": "無上限；X軸僅為示意"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "遠東 Bankee",
+      "slug": "bankee",
+      "status": "已確認",
+      "new_rate_value": 2.6,
+      "existing_rate_value": 2.6,
+      "new_rate_text": "最高 2.6%",
+      "existing_rate_text": "最高 2.6%",
+      "general_rate": "基本活存 1.435%，無金額上限",
+      "promo_summary": "基本 1.435% 無上限；最高 2.6%。",
+      "tier_summary": "新戶前 5 萬元可達 2.6%；社群方案依等級提高，基本利率 1.435% 無上限。",
+      "limit": "新戶方案前 5 萬元；社群方案依等級可提高，官方產品頁標示最高可達 500 萬元",
+      "conditions": "新戶開戶前 6 個月，指定額度適用 2.6%；社群高額方案需符合社群／推薦等級條件，完整級距依活動頁。",
+      "period": "即日起～2026-12-31",
+      "interest": "按日計息，以各級距每日存款餘額之百元整數計算；每月21日付息。",
+      "transfer": "6 次／月",
+      "withdraw": "6 次／月",
+      "benefits": "社群銀行機制、無卡提款、多元收付與證券合作活動。",
+      "change": "補齊官方計息方式：按日、百元單位、每月21日付息。",
+      "notes": "2.6% 可能有不同取得路徑；各路徑額度與條件應分開檢視。",
+      "sources": [
+        {
+          "label": "Bankee 2026 高利活存官方活動",
+          "url": "https://www.bankee.com.tw/event/adDepo/index.html"
+        },
+        {
+          "label": "Bankee 數位臺幣存款",
+          "url": "https://www.bankee.com.tw/deposit.html"
+        },
+        {
+          "label": "Bankee 官方首頁",
+          "url": "https://www.bankee.com.tw/"
+        },
+        {
+          "label": "Bankee官方利息計算說明",
+          "url": "https://www.bankee.com.tw/event/award22Q4/index.html"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "新戶級距示意",
+          "description": "前 5 萬元可享 2.6%；超過部分回到基本活存 1.435%。",
+          "tiers": [
+            {
+              "range_label": "0～5萬元",
+              "range_amount": 50000,
+              "rate": 2.6,
+              "note": "新戶優惠級距"
+            },
+            {
+              "range_label": "超過5萬元",
+              "range_amount": 150000,
+              "rate": 1.435,
+              "note": "示意：以 20 萬元總存款繪圖，超過部分回到基本利率"
+            }
+          ]
+        },
+        {
+          "label": "基本活存1.435%無上限（示意範圍）",
+          "description": "基本活存1.435%無金額上限；X軸使用0～100萬元示意，不代表計息上限。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～100萬元（示意）",
+              "range_amount": 1000000,
+              "rate": 1.435,
+              "note": "基本利率無上限"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "將來 NEXT Bank",
+      "slug": "nextbank",
+      "status": "已確認主方案",
+      "new_rate_value": 1.5,
+      "existing_rate_value": 1.5,
+      "new_rate_text": "1.5%",
+      "existing_rate_text": "1.5%",
+      "general_rate": "新臺幣活存 1.5%，金額無上限",
+      "promo_summary": "1.5% 無上限；春季新聞稿另曾列新戶 10%，但本次未確認 7 月仍有效，故不列為現行比較利率。",
+      "tier_summary": "1.5% 無上限。",
+      "limit": "1.5% 無上限",
+      "conditions": "1.5% 主方案未載額外任務。",
+      "period": "官方新聞稿未為 1.5% 方案列固定結束日",
+      "interest": "新臺幣1元起息；每月21日將利息存入帳戶，並以APP推播通知。",
+      "transfer": "50 次／月",
+      "withdraw": "5 次／月",
+      "benefits": "另有每月 1 次跨行現金存款免手續費、支付、將將卡、基金與外幣服務。",
+      "change": "補齊官方說明：1元起息、每月21日入息。",
+      "notes": "這是避免將已可能屆期的季節性優惠誤列為現行方案。",
+      "sources": [
+        {
+          "label": "NEXT Bank 官方新聞稿",
+          "url": "https://www.nextbank.com.tw/announcement/4b262cbb0600000005db69481a78b4a4/news76"
+        },
+        {
+          "label": "NEXT Bank 官方首頁",
+          "url": "https://www.nextbank.com.tw/"
+        },
+        {
+          "label": "將來銀行數位帳戶活存說明",
+          "url": "https://www.nextbank.com.tw/blog/digitalaccount?ncbLink=&utm_medium=readmore&utm_source=blog"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "1.5%無上限（示意範圍）",
+          "description": "1.5%沒有金額上限；X軸使用0～100萬元作為視覺示意，不代表計息上限。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～100萬元（示意）",
+              "range_amount": 1000000,
+              "rate": 1.5,
+              "note": "無上限；X軸僅為示意"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "third_party_note": "",
+      "third_party_sources": []
+    },
+    {
+      "name": "郵局 數位帳戶",
+      "slug": "post-digital",
+      "status": "部分確認",
+      "new_rate_value": 0.83,
+      "existing_rate_value": 0.83,
+      "new_rate_text": "約 0.83%（第三方，未驗證）",
+      "existing_rate_text": "約 0.83%（第三方，未驗證）",
+      "general_rate": "採郵政存簿儲金牌告利率；官方動態利率欄位本次未能擷取確切百分比",
+      "promo_summary": "數位帳戶採郵政存簿儲金利率；暫以第三方約0.83%呈現，未經官方動態頁數字確認。",
+      "tier_summary": "新舊戶皆採存簿儲金利率；約0.83%為第三方暫估，歸戶最高計息100萬元。",
+      "limit": "存簿儲金同一身分證號歸戶合併計息，最高計息金額 100 萬元",
+      "conditions": "數位帳戶採存簿儲金利率；跨提優惠需前月 26 日至當月 25 日完成 Acctlink、行動郵局繳費、VISA 刷卡三項中的二項。",
+      "period": "跨提任務依官方數位帳戶頁持續公告；e 財庫跨轉 5 次活動至 2026-12-31",
+      "interest": "按日計息，以 365 日為基礎；每半年結息一次，結息日為 6 月 20 日及 12 月 20 日。",
+      "transfer": "e財庫：前月26日至當月25日完成綁定帳戶出入金，次月享5次跨行轉帳免手續費，至2026/12/31。一般小額跨轉：500元以下每帳戶每日第一筆免手續費，跨ATM／WebATM／網路郵局／APP等通路併計。",
+      "withdraw": "完成三項任務中的二項，次月享跨行提款優惠；官方可讀內容未顯示確切次數",
+      "benefits": "郵局據點與 ATM 網絡、行動郵局、VISA 金融卡及多種電子支付連結。",
+      "change": "補齊e財庫次月5次及一般500元以下每日首筆免費；官方動態利率及數位帳戶跨提確切次數仍待確認。",
+      "notes": "數位帳戶與實體存簿儲金按身分證號歸戶合併計息。",
+      "sources": [
+        {
+          "label": "郵政數位存款帳戶專區",
+          "url": "https://epost.post.gov.tw/pstDigit/home.html"
+        },
+        {
+          "label": "郵政存款利率查詢",
+          "url": "https://freeipost.post.gov.tw/pstacce/query.html"
+        },
+        {
+          "label": "郵政存簿儲金利息計算",
+          "url": "https://www.post.gov.tw/post/internet/B_saving/index.jsp?ID=3010103"
+        },
+        {
+          "label": "中華郵政e財庫跨轉優惠公告",
+          "url": "https://www.post.gov.tw/post/internet/B_saving/index.jsp?ID=305&control_type=page&news_cat=5&news_no=73233&news_type=latest_news"
+        },
+        {
+          "label": "網路郵局／APP資費及限額",
+          "url": "https://www.post.gov.tw/post/internet/B_saving/index.jsp?ID=301120502"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "存簿儲金利率",
+          "description": "數位帳戶採存簿儲金牌告利率，歸戶最高計息100萬元。約0.83%為第三方暫補，尚未由官方動態利率頁確認。",
+          "verified": false,
+          "tiers": [
+            {
+              "range_label": "0～100萬元",
+              "range_amount": 1000000,
+              "rate": 0.83,
+              "note": "百分比為第三方暫補"
+            }
+          ]
+        }
+      ],
+      "new_rate_verified": false,
+      "existing_rate_verified": false,
+      "third_party_note": "官方利率查詢頁為動態欄位，擷取時未回傳百分比；第三方資料顯示郵政存簿儲金約0.83%。",
+      "third_party_sources": [
+        {
+          "label": "遠見：2026 郵局存款新制整理（第三方）",
+          "url": "https://www.gvm.com.tw/article/127734"
+        },
+        {
+          "label": "MoneyDJ牌告資料（第三方）",
+          "url": "https://tcbbankfund.moneydj.com/r/rc/rcc_K7010000.djhtm"
+        }
+      ]
+    }
+  ],
+  "missing_data": [
+    {
+      "bank": "兆豐 MegaLite",
+      "field": "目前固定百分比",
+      "severity": "中",
+      "status": "官方提供公式；固定值未擷取",
+      "known": "官方確認為「兆豐活期儲蓄存款機動利率＋0.395%」，10萬元內適用。",
+      "missing": "兆豐官方動態利率表未在可讀頁面回傳當日活期儲蓄存款百分比，因此約1.2%仍是第三方換算。",
+      "checked": "MegaLite活動頁、event4詳細頁、兆豐臺幣存放款利率頁。",
+      "sources": [
+        {
+          "label": "MegaLite官方詳細頁",
+          "url": "https://wwwfile.megabank.com.tw/event/megalite/event4.html"
+        },
+        {
+          "label": "兆豐臺幣存放款利率",
+          "url": "https://www.megabank.com.tw/personal/savings/deposit-service/rate/twd-rate"
+        }
+      ]
+    },
+    {
+      "bank": "土地銀行 數位帳戶",
+      "field": "固定付息日",
+      "severity": "低",
+      "status": "頻率已確認，日期未載",
+      "known": "官方專案頁確認按日計息、按月給付利息。",
+      "missing": "目前官方專案頁未載每月固定入帳日。",
+      "checked": "數位存款優惠專案、土地銀行官方網站與站內搜尋。",
+      "sources": [
+        {
+          "label": "土銀數位存款優惠專案",
+          "url": "https://www.landbank.com.tw/Bulletin/Detail/4827b4f2-618c-436c-968d-ac9200a45092?code=H300"
+        }
+      ]
+    },
+    {
+      "bank": "LINE Bank",
+      "field": "口袋帳戶固定付息日",
+      "severity": "低",
+      "status": "頻率已確認，日期未載",
+      "known": "官方確認1元起息、按日計息、每月領息。",
+      "missing": "公開產品頁、FAQ及新聞稿未載固定日曆入帳日。",
+      "checked": "口袋帳戶產品頁、產品總覽、存款FAQ、官方新聞稿。",
+      "sources": [
+        {
+          "label": "LINE Bank口袋帳戶新聞稿",
+          "url": "https://corp.linebank.com.tw/news/e97e381d-d3fa-4234-845c-f09ec76f2f64"
+        },
+        {
+          "label": "LINE Bank產品總覽",
+          "url": "https://www.linebank.com.tw/products"
+        },
+        {
+          "label": "LINE Bank存款FAQ",
+          "url": "https://www.linebank.com.tw/faq/03"
+        }
+      ]
+    },
+    {
+      "bank": "樂天國際銀行",
+      "field": "新戶2.8%完整活動辦法",
+      "severity": "高",
+      "status": "最高利率與截止日已確認；級距／額度未取得",
+      "known": "官方優惠總覽標示開戶次日起活儲最高2.8%，至2026/7/31。",
+      "missing": "2.8%的計息額度、完整分層利率、是否需任務及詳細適用資格。",
+      "checked": "官方優惠總覽、站內搜尋2.8%、官方活動頁與PDF搜尋。",
+      "sources": [
+        {
+          "label": "樂天銀行優惠總覽",
+          "url": "https://www.rakuten-bank.com.tw/portal/campaign/overview"
+        }
+      ]
+    },
+    {
+      "bank": "樂天國際銀行",
+      "field": "快樂會員跨轉／跨提次數",
+      "severity": "中",
+      "status": "制度已確認；各級數字未取得",
+      "known": "官方確認依上月餘額或指定交易次數每月更新會員等級，並依等級提供手續費優惠。",
+      "missing": "各會員等級的免費跨行轉帳及提款確切次數。",
+      "checked": "快樂會員方案頁、官方網域搜尋「跨行」「免費次數」「VIP」。",
+      "sources": [
+        {
+          "label": "樂天快樂會員方案",
+          "url": "https://www.rakuten-bank.com.tw/portal/product/happy-program"
+        }
+      ]
+    },
+    {
+      "bank": "樂天國際銀行",
+      "field": "活儲付息頻率與日期",
+      "severity": "中",
+      "status": "未取得",
+      "known": "已確認1.5%任務方案及新戶最高2.8%。",
+      "missing": "活儲是每月／半年付息，以及固定入帳日。",
+      "checked": "優惠總覽、快樂會員頁、官方產品頁及官方網域關鍵字搜尋。",
+      "sources": [
+        {
+          "label": "樂天銀行優惠總覽",
+          "url": "https://www.rakuten-bank.com.tw/portal/campaign/overview"
+        },
+        {
+          "label": "樂天銀行官方首頁",
+          "url": "https://www.rakuten-bank.com.tw/portal/home"
+        }
+      ]
+    },
+    {
+      "bank": "中華郵政 數位帳戶",
+      "field": "現行官方存簿儲金百分比",
+      "severity": "中",
+      "status": "官方動態頁未回傳；目前採第三方約0.83%",
+      "known": "官方確認數位帳戶採存簿儲金牌告利率，按日計息，6/20及12/20結息。",
+      "missing": "查核日的官方存簿儲金確切百分比。",
+      "checked": "郵政存款利率查詢動態頁、數位帳戶專區、官方站內及網域搜尋。",
+      "sources": [
+        {
+          "label": "郵政存款利率查詢",
+          "url": "https://freeipost.post.gov.tw/pstacce/query.html"
+        },
+        {
+          "label": "郵政數位存款帳戶專區",
+          "url": "https://epost.post.gov.tw/pstDigit/home.html"
+        }
+      ]
+    },
+    {
+      "bank": "中華郵政 數位帳戶",
+      "field": "數位帳戶跨行提款優惠次數",
+      "severity": "中",
+      "status": "任務條件已知；確切次數未取得",
+      "known": "官方頁載明完成Acctlink、行動郵局繳費、VISA刷卡三項中的二項，次月享跨行提款優惠。",
+      "missing": "符合任務後的免費跨行提款確切次數。",
+      "checked": "數位帳戶專區、儲匯FAQ、網路郵局／APP資費頁及官方網域搜尋。",
+      "sources": [
+        {
+          "label": "郵政數位存款帳戶專區",
+          "url": "https://epost.post.gov.tw/pstDigit/home.html"
+        },
+        {
+          "label": "網路郵局／APP資費及限額",
+          "url": "https://www.post.gov.tw/post/internet/B_saving/index.jsp?ID=301120502"
+        }
+      ]
+    },
+    {
+      "bank": "台北富邦 數位帳戶",
+      "field": "既有戶定向活動第二組門檻標題",
+      "severity": "低",
+      "status": "表格數字完整；頁面文字疑似重複",
+      "known": "第二組表格列0～60萬0.695%、60～90萬1.2%、90～120萬1.6%。",
+      "missing": "官方頁第二組前置文字與第一組重複，無法完全確認原本 intended 的近三月平均存款分組標題。",
+      "checked": "2026/6/1官方台幣活儲優利加碼活動頁。",
+      "sources": [
+        {
+          "label": "富邦既有戶台幣活儲優利活動",
+          "url": "https://www.fubon.com/banking/news/digitalService/news20260601.htm"
+        }
+      ]
+    }
+  ]
+}

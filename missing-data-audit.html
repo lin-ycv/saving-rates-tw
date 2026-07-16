@@ -1,0 +1,85 @@
+
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>資料缺漏稽核｜台灣數位帳戶比較</title>
+  <style>
+    :root{--bg:#f4f7fb;--card:#fff;--ink:#172033;--muted:#667085;--line:#e1e7f0;--blue:#2563eb;--red:#b42318;--amber:#9a5a00;--green:#067647}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.65}
+    .wrap{width:min(1180px,calc(100% - 28px));margin:0 auto;padding:32px 0 50px}
+    header{padding:25px;border-radius:20px;background:linear-gradient(135deg,#14264a,#2563eb 62%,#6d28d9);color:#fff;box-shadow:0 16px 38px rgba(30,52,105,.18)}
+    h1{margin:0 0 7px;font-size:clamp(2rem,4vw,3.4rem)}
+    header p{margin:0;color:#dbeafe}
+    .tools{display:grid;grid-template-columns:1fr 220px 120px;gap:10px;margin:18px 0}
+    input,select,button{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:#fff;font:inherit}
+    button{background:#172033;color:#fff;border:0;font-weight:800;cursor:pointer}
+    .summary{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0;color:var(--muted)}
+    .summary span{background:#fff;border:1px solid var(--line);padding:6px 10px;border-radius:999px}
+    .gaps{display:grid;gap:13px}
+    .gap-card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:19px;box-shadow:0 8px 24px rgba(31,42,68,.06)}
+    .gap-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:11px;margin-bottom:11px}
+    .gap-head>div:first-child{display:flex;gap:9px;align-items:center}
+    h2{margin:0;font-size:1.2rem}
+    .field-name{color:var(--blue);font-weight:800;text-align:right}
+    .severity{display:inline-flex;min-width:28px;justify-content:center;padding:2px 7px;border-radius:999px;font-size:.75rem;font-weight:900}
+    .sev-高{background:#fef3f2;color:var(--red)}
+    .sev-中{background:#fff4d8;color:var(--amber)}
+    .sev-低{background:#ecfdf3;color:var(--green)}
+    dl{display:grid;grid-template-columns:90px 1fr;margin:0}
+    dt,dd{padding:8px 9px;border-bottom:1px solid #edf0f5;margin:0}
+    dt{font-weight:850;background:#f8fafc}
+    .gap-sources{display:flex;flex-wrap:wrap;gap:7px}
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .empty{display:none;background:#fff;padding:28px;text-align:center;color:var(--muted);border:1px solid var(--line);border-radius:16px}
+    .note{margin-top:18px;padding:14px 16px;border-radius:14px;background:#fff8e7;border:1px solid #f0d178}
+    .page-error{background:#fff;padding:24px;border:1px solid var(--line);border-radius:16px}
+    @media(max-width:700px){
+      .tools{grid-template-columns:1fr}
+      .gap-head{display:grid}
+      .field-name{text-align:left}
+      dl{grid-template-columns:1fr}
+      dt{padding-bottom:2px;border-bottom:0}
+      dd{padding-top:2px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>資料缺漏稽核</h1>
+      <p>查核日 <span id="reportDate">載入中…</span>｜此頁刻意不由首頁或銀行頁連結。</p>
+    </header>
+
+    <div class="tools">
+      <input id="q" type="search" placeholder="搜尋銀行、欄位或缺漏內容">
+      <select id="sev">
+        <option value="">全部嚴重度</option>
+        <option value="高">高</option>
+        <option value="中">中</option>
+        <option value="低">低</option>
+      </select>
+      <button id="reset" type="button">重設</button>
+    </div>
+
+    <div class="summary">
+      <span>缺漏項目：<strong id="visibleCount">0</strong> / <span id="totalCount">0</span></span>
+      <span>高：<span id="count-高">0</span></span>
+      <span>中：<span id="count-中">0</span></span>
+      <span>低：<span id="count-低">0</span></span>
+    </div>
+
+    <section class="gaps" id="gaps"></section>
+    <div class="empty" id="empty">沒有符合篩選條件的缺漏項目。</div>
+
+    <div class="note">
+      <strong>判讀：</strong>缺漏通常只代表某個欄位尚未完整確認，不一定代表整個帳戶資料不可使用。
+    </div>
+  </div>
+
+  <script type="module" src="assets/audit.js"></script>
+</body>
+</html>
