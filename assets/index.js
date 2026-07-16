@@ -14,7 +14,6 @@ let state = {
   sortMode: "new",
   query: "",
   verification: "all",
-  tieredOnly: false,
   minRate: 0,
 };
 
@@ -54,7 +53,6 @@ function filteredBanks() {
       state.verification !== "all" &&
       verificationGroup(bank) !== state.verification
     ) return false;
-    if (state.tieredOnly && !(bank.tier_diagrams || []).length) return false;
 
     const activeRate = rateFor(bank, state.sortMode);
     if (
@@ -130,6 +128,46 @@ function renderChart(items) {
   }).join("") || '<div class="empty-state">沒有符合目前篩選條件的帳戶。</div>';
 }
 
+
+function compactLines(value, maximum = 3) {
+  const parts = String(value || "")
+    .replace(/(?=[①②③④⑤⑥⑦⑧⑨⑩])/g, "；")
+    .split(/；\s*|(?<=。)\s*(?=[^\s])/u)
+    .map(part => part.trim().replace(/[；。]+$/u, ""))
+    .filter(Boolean);
+
+  const visible = parts.slice(0, maximum);
+  const hiddenCount = Math.max(0, parts.length - visible.length);
+
+  return `
+    <div class="compact-lines">
+      ${visible.map(part => `<div>${escapeHtml(part)}</div>`).join("")}
+      ${hiddenCount
+        ? `<div class="more-details">另有 ${hiddenCount} 項，請進入詳細頁</div>`
+        : ""}
+    </div>
+  `;
+}
+
+function ratePair(bank) {
+  return `
+    <div class="rate-pair">
+      <div>
+        <span class="compact-label">新戶</span>
+        <strong>${escapeHtml(bank.new_rate_text)}</strong>
+        ${rateBadge(bank.new_rate_verified)}
+      </div>
+      <div>
+        <span class="compact-label">既有戶</span>
+        <strong>${escapeHtml(bank.existing_rate_text)}</strong>
+        ${rateBadge(bank.existing_rate_verified)}
+      </div>
+    </div>
+  `;
+}
+
+
+
 function renderTable(items) {
   const body = document.getElementById("comparisonBody");
 
@@ -145,37 +183,42 @@ function renderTable(items) {
 
     return `
       <tr>
-        <td>${index + 1}</td>
+        <td class="rank-cell">${index + 1}</td>
         <td class="name-cell">
           <a href="${bankUrl(bank)}">${escapeHtml(bank.name)}</a><br>
           <span class="status ${statusClass(bank.status)}">${escapeHtml(bank.status)}</span>
         </td>
-        <td>
+        <td class="rate-cell">
           <strong>${escapeHtml(bank.new_rate_text)}</strong><br>
           ${rateBadge(bank.new_rate_verified)}
         </td>
-        <td>
+        <td class="rate-cell">
           <strong>${escapeHtml(bank.existing_rate_text)}</strong><br>
           ${rateBadge(bank.existing_rate_verified)}
         </td>
-        <td>${escapeHtml(bank.tier_summary)}</td>
-        <td>${escapeHtml(bank.conditions)}</td>
-        <td>${escapeHtml(bank.period)}</td>
-        <td>${escapeHtml(bank.interest)}</td>
-        <td>${escapeHtml(bank.transfer)}</td>
-        <td>${escapeHtml(bank.withdraw)}</td>
-        <td>${escapeHtml(bank.change)}</td>
-        <td><div class="source-list">${sources}</div></td>
+        <td class="tier-cell">
+          ${compactLines(bank.tier_summary, 3)}
+          <div class="compact-secondary">
+            <span class="compact-label">額度</span>
+            ${escapeHtml(bank.limit)}
+          </div>
+        </td>
+        <td class="conditions-cell">${compactLines(bank.conditions, 3)}</td>
+        <td class="period-cell">${compactLines(bank.period, 3)}</td>
+        <td class="transfer-cell">${compactLines(bank.transfer, 2)}</td>
+        <td class="withdraw-cell">${compactLines(bank.withdraw, 2)}</td>
+        <td class="sources-cell"><div class="source-list">${sources}</div></td>
       </tr>
     `;
   }).join("") || `
     <tr>
-      <td colspan="12">
+      <td colspan="10">
         <div class="empty-state">沒有符合目前篩選條件的帳戶。</div>
       </td>
     </tr>
   `;
 }
+
 
 function render() {
   const items = filteredBanks();
@@ -214,11 +257,6 @@ function bindControls() {
     render();
   });
 
-  document.getElementById("tieredOnly").addEventListener("change", event => {
-    state.tieredOnly = event.target.checked;
-    render();
-  });
-
   document.getElementById("minRate").addEventListener("change", event => {
     state.minRate = Number(event.target.value);
     render();
@@ -229,12 +267,10 @@ function bindControls() {
       sortMode: "new",
       query: "",
       verification: "all",
-      tieredOnly: false,
-      minRate: 0,
+          minRate: 0,
     };
     document.getElementById("bankSearch").value = "";
     document.getElementById("verificationFilter").value = "all";
-    document.getElementById("tieredOnly").checked = false;
     document.getElementById("minRate").value = "0";
     render();
   });

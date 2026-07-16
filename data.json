@@ -510,14 +510,14 @@
     {
       "name": "兆豐 MegaLite",
       "slug": "mega-megalite",
-      "status": "已確認",
+      "status": "已確認（牌告採第三方備援）",
       "new_rate_value": 1.2,
       "existing_rate_value": 1.2,
-      "new_rate_text": "官方公式：牌告活儲＋0.395%；第三方換算約1.2%",
-      "existing_rate_text": "官方公式：牌告活儲＋0.395%；第三方換算約1.2%",
-      "general_rate": "超過 10 萬元部分按兆豐銀行一般活期儲蓄存款牌告利率",
-      "promo_summary": "10萬元內按兆豐活期儲蓄存款機動利率＋0.395%；固定約1.2%為第三方依當期牌告換算。",
-      "tier_summary": "10萬元內適用公式型利率；超過部分按牌告利率。",
+      "new_rate_text": "10萬元內1.20%",
+      "existing_rate_text": "10萬元內1.20%",
+      "general_rate": "超過10萬元部分按兆豐一般活期儲蓄存款牌告利率。官方動態頁未回傳可讀數字，本期採MoneyDJ 2026/7/11牌告0.805%作備援。",
+      "promo_summary": "官方公式為兆豐活期儲蓄存款機動利率＋0.395%。以MoneyDJ牌告0.805%計算，10萬元內為1.20%。",
+      "tier_summary": "0～10萬元1.20%；超過10萬元部分按牌告0.805%。牌告百分比來自MoneyDJ備援，公式與加碼幅度來自兆豐官方。",
       "limit": "10 萬元",
       "conditions": "持有 MegaLite 新臺幣數位存款帳戶。",
       "period": "2026-01-01～2026-12-31",
@@ -525,7 +525,7 @@
       "transfer": "10 次／月；符合指定外幣換匯可於次月增加，最多再加 10 次",
       "withdraw": "10 次／月",
       "benefits": "18 種外幣、基金小額投資與指定投資手續費優惠。",
-      "change": "補強官方公式、100元起息及每月20日結息／21日付息；固定百分比仍待官方動態牌告表確認。",
+      "change": "將固定百分比來源改為指定MoneyDJ牌告備援：0.805%＋官方加碼0.395%=1.20%。",
       "notes": "優惠利率會隨一般活儲機動牌告利率變動。",
       "sources": [
         {
@@ -539,30 +539,32 @@
       ],
       "tier_diagrams": [
         {
-          "label": "MegaLite優惠額度",
-          "description": "官方以「牌告活儲利率＋0.395%」表示；圖中約1.2%為第三方依當期牌告換算，10萬元內適用。",
+          "label": "MegaLite臺幣優惠",
+          "description": "10萬元內採官方「牌告活儲＋0.395%」公式；MoneyDJ牌告0.805%換算為1.20%。第二段再以10萬元示意超額部分。",
           "verified": false,
           "tiers": [
             {
               "range_label": "0～10萬元",
               "range_amount": 100000,
               "rate": 1.2,
-              "note": "固定百分比為第三方換算"
+              "note": "官方公式＋MoneyDJ牌告備援"
+            },
+            {
+              "range_label": "10萬～20萬元（示意）",
+              "range_amount": 100000,
+              "rate": 0.805,
+              "note": "超額按MoneyDJ列示的牌告利率"
             }
           ]
         }
       ],
       "new_rate_verified": false,
       "existing_rate_verified": false,
-      "third_party_note": "官方頁以「一般活儲機動利率＋0.395%」呈現；固定1.2%為第三方依當時牌告換算，牌告變動時會跟著改變。",
+      "third_party_note": "兆豐官方確認加碼公式為活期儲蓄存款機動利率＋0.395%，但官方動態利率頁未提供可擷取數字；本期使用MoneyDJ於2026/7/11列示的0.805%。",
       "third_party_sources": [
         {
-          "label": "這就是人生：2026 下半年數位帳戶比較（第三方）",
-          "url": "https://www.beurlife.com/2018/11/best-digital-bank-deposit-fund-pay.html"
-        },
-        {
-          "label": "HankExploring：MegaLite 2026 整理（第三方）",
-          "url": "https://www.hankexploring.com/megalite/"
+          "label": "MoneyDJ：兆豐銀行牌告利率（2026/07/11）",
+          "url": "https://tcbbankfund.moneydj.com/r/rc/rcc_K0170000.djhtm"
         }
       ]
     },
@@ -1206,48 +1208,116 @@
     {
       "name": "將來 NEXT Bank",
       "slug": "nextbank",
-      "status": "已確認主方案",
-      "new_rate_value": 1.5,
-      "existing_rate_value": 1.5,
-      "new_rate_text": "1.5%",
-      "existing_rate_text": "1.5%",
-      "general_rate": "新臺幣活存 1.5%，金額無上限",
-      "promo_summary": "1.5% 無上限；春季新聞稿另曾列新戶 10%，但本次未確認 7 月仍有效，故不列為現行比較利率。",
-      "tier_summary": "1.5% 無上限。",
-      "limit": "1.5% 無上限",
-      "conditions": "1.5% 主方案未載額外任務。",
-      "period": "官方新聞稿未為 1.5% 方案列固定結束日",
-      "interest": "新臺幣1元起息；每月21日將利息存入帳戶，並以APP推播通知。",
-      "transfer": "50 次／月",
-      "withdraw": "5 次／月",
-      "benefits": "另有每月 1 次跨行現金存款免手續費、支付、將將卡、基金與外幣服務。",
-      "change": "補齊官方說明：1元起息、每月21日入息。",
-      "notes": "這是避免將已可能屆期的季節性優惠誤列為現行方案。",
+      "status": "已確認多項現行專案",
+      "new_rate_value": 2.0,
+      "existing_rate_value": 2.0,
+      "new_rate_text": "最高2%（完成任務）",
+      "existing_rate_text": "最高2%（完成任務／薪轉）",
+      "general_rate": "2026Q3存款專案A：前5萬元按當時牌告活儲；超過5萬元按牌告＋0.56%，官方活動頁列示截至2026/3/24為1.435%。",
+      "promo_summary": "同時有三項現行活儲專案：一般存款專案A最高1.435%；完成任務的存款專案B及薪轉戶專案A，5萬～20萬元最高2%，20萬元以上1.6%。",
+      "tier_summary": "專案A：0～5萬元牌告、5萬元以上1.435%；專案B／薪轉A：0～5萬元牌告、5萬～20萬元2%、20萬元以上1.6%。",
+      "limit": "專案A的1.435%適用5萬元以上且未載上限；專案B／薪轉A的2%適用5萬～20萬元，20萬元以上為1.6%且未載上限。",
+      "conditions": "存款專案A：持有新臺幣活期儲蓄存款主帳戶即可參加。；存款專案B：當月完成任一任務—將將卡／大將卡單筆滿100元且成功刷卡至少5筆，或完成投資屬性測驗且投資帳戶月平均資產達10萬元。；薪轉戶專案A：當月成為薪轉客戶並成功撥薪；連續三個月無薪資入帳即不符資格。；新開戶者也可參加專案B，但須在當月及時完成任務。",
+      "period": "存款專案A參加期間：2026-04-01～2026-09-30。；存款專案B參加期間：2026-04-01～2026-09-30，利率加碼期間至2026-11-05。；薪轉戶專案A參加期間：2026-04-01～2026-09-30，利率加碼期間至2026-11-05。",
+      "interest": "各專案依每日主帳戶日終餘額及對應級距計息。；存款專案B與薪轉戶專案A於上月符合資格後，自次月6日起適用一個月。；原有一般帳戶規則為新臺幣1元起息、每月21日入息；專案利率仍以最新公告及牌告為準。",
+      "transfer": "2026-07-01～2026-09-30：網路銀行及行動銀行跨行轉帳50次／月。",
+      "withdraw": "2026-07-01～2026-09-30：全台ATM跨行提款5次／月；另有跨行存款1次／月。",
+      "benefits": "每月1次ATM跨行存款免手續費；跨存手續費於次月10日前補貼。；薪轉客戶若另有薪轉專屬手續費優惠，以薪轉方案為主。",
+      "change": "移除過時的1.5%無上限來源，改採2026Q3官方公告。；新增存款專案A、存款專案B及薪轉戶專案A三項並行方案；最高利率更新為2%。；跨轉／跨提更新為2026Q3的50次／5次。",
+      "notes": "專案A、B與薪轉戶專案A合併限額500億元，銀行保留提前變更或終止權利。；活動頁所列牌告基準值分別標示截至2026/3/24或2026/3/11，實際仍應以當時官方牌告為準。",
       "sources": [
         {
-          "label": "NEXT Bank 官方新聞稿",
-          "url": "https://www.nextbank.com.tw/announcement/4b262cbb0600000005db69481a78b4a4/news76"
+          "label": "NEXT Bank 優惠活動資訊總覽",
+          "url": "https://www.nextbank.com.tw/announcement/45c1e31fa40000000285cadc56793797"
         },
         {
-          "label": "NEXT Bank 官方首頁",
-          "url": "https://www.nextbank.com.tw/"
+          "label": "2026Q3將來存款專案A",
+          "url": "https://www.nextbank.com.tw/announcement/45c1e31fa40000000285cadc56793797/event1022"
         },
         {
-          "label": "將來銀行數位帳戶活存說明",
-          "url": "https://www.nextbank.com.tw/blog/digitalaccount?ncbLink=&utm_medium=readmore&utm_source=blog"
+          "label": "2026Q3將來存款專案B",
+          "url": "https://www.nextbank.com.tw/announcement/45c1e31fa40000000285cadc56793797/event1026"
+        },
+        {
+          "label": "2026Q3將來薪轉戶專案A",
+          "url": "https://www.nextbank.com.tw/announcement/45c1e31fa40000000285cadc56793797/event1027"
+        },
+        {
+          "label": "2026Q3跨行轉帳／提款／存款免手續費",
+          "url": "https://www.nextbank.com.tw/announcement/45c1e31fa40000000285cadc56793797/event1194"
+        },
+        {
+          "label": "NEXT Bank 臺幣存款牌告利率",
+          "url": "https://www.nextbank.com.tw/rate"
         }
       ],
       "tier_diagrams": [
         {
-          "label": "1.5%無上限（示意範圍）",
-          "description": "1.5%沒有金額上限；X軸使用0～100萬元作為視覺示意，不代表計息上限。",
+          "label": "2026Q3存款專案A",
+          "description": "前5萬元按當時活期儲蓄存款牌告；超過5萬元按牌告＋0.56%，活動頁列示截至2026/3/24為1.435%。第二段以100萬元作示意，並非官方上限。",
           "verified": true,
           "tiers": [
             {
-              "range_label": "0～100萬元（示意）",
-              "range_amount": 1000000,
-              "rate": 1.5,
-              "note": "無上限；X軸僅為示意"
+              "range_label": "0～5萬元",
+              "range_amount": 50000,
+              "rate": 0.875,
+              "note": "活動頁列示基準牌告約0.875%；實際依當時牌告"
+            },
+            {
+              "range_label": "5萬～100萬元（示意）",
+              "range_amount": 950000,
+              "rate": 1.435,
+              "note": "5萬元以上適用，未載上限；X軸只作示意"
+            }
+          ]
+        },
+        {
+          "label": "2026Q3存款專案B",
+          "description": "當月完成刷卡或財管任務，次月6日起適用：5萬～20萬元2%，20萬元以上1.6%。最後一段以100萬元作示意，並非官方上限。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～5萬元",
+              "range_amount": 50000,
+              "rate": 0.875,
+              "note": "按當時活期儲蓄存款牌告"
+            },
+            {
+              "range_label": "5萬～20萬元",
+              "range_amount": 150000,
+              "rate": 2.0,
+              "note": "完成任一指定任務"
+            },
+            {
+              "range_label": "20萬～100萬元（示意）",
+              "range_amount": 800000,
+              "rate": 1.6,
+              "note": "20萬元以上適用，未載上限"
+            }
+          ]
+        },
+        {
+          "label": "2026Q3薪轉戶專案A",
+          "description": "當月成功撥薪，次月6日起適用：5萬～20萬元2%，20萬元以上1.6%。最後一段以100萬元作示意，並非官方上限。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～5萬元",
+              "range_amount": 50000,
+              "rate": 0.875,
+              "note": "按當時活期儲蓄存款牌告"
+            },
+            {
+              "range_label": "5萬～20萬元",
+              "range_amount": 150000,
+              "rate": 2.0,
+              "note": "當月成功撥薪"
+            },
+            {
+              "range_label": "20萬～100萬元（示意）",
+              "range_amount": 800000,
+              "rate": 1.6,
+              "note": "20萬元以上適用，未載上限"
             }
           ]
         }
@@ -1327,28 +1397,122 @@
           "url": "https://tcbbankfund.moneydj.com/r/rc/rcc_K7010000.djhtm"
         }
       ]
+    },
+    {
+      "slug": "kgibank-karry",
+      "name": "凱基 Karry",
+      "status": "已確認",
+      "new_rate_value": 8.8,
+      "existing_rate_value": 1.98,
+      "new_rate_text": "新戶最高8.8%",
+      "existing_rate_text": "既有戶最高1.98%",
+      "new_rate_verified": true,
+      "existing_rate_verified": true,
+      "general_rate": "凱基銀行官方友善金融利率頁於2026/7/16列示：活期儲蓄存款0.805%、活期存款0.705%。Karry未完成任務、優惠失效或超過指定級距時依相關帳戶牌告計息。",
+      "promo_summary": "新戶前5萬元最高8.8%；新戶與既有戶完成每月任一任務後，30萬～100萬元1.28%、100萬～200萬元1.78%、200萬～300萬元1.98%。",
+      "tier_summary": "新戶：0～5萬元8.8%、5萬～30萬元0.805%、30萬～100萬元1.28%、100萬～200萬元1.78%、200萬～300萬元1.98%。；既有戶：0～30萬元0.805%、30萬～100萬元1.28%、100萬～200萬元1.78%、200萬～300萬元1.98%。",
+      "limit": "8.8%額度為5萬元；1.28%～1.98%階梯優惠最高計至300萬元；超過300萬元回到各帳戶牌告利率。",
+      "conditions": "新戶資格：年滿18歲本國自然人、未持有凱基銀行有效存款帳戶，並於2026/7/1～12/30成功開立凱基臺外幣數位帳戶；開戶前6個月內曾結清者不適用。；新戶每月任務擇一：他行轉入或ATM存入單筆至少2萬元；設定凱基證券臺股或複委託交割戶；每月換匯累積至少5,000元；成功自動扣繳一筆信用卡款；成功授扣一筆臺幣或美元保費；首次完成投資屬性分析問卷。；既有戶每月任務擇一：他行轉入或ATM存入單筆至少2萬元；設定新開立的凱基證券臺股／複委託交割戶；每月換匯累積至少2萬元；成功授扣一筆臺幣或美元保費；首次完成或失效後更新投資屬性分析問卷。；完成任務後最快次營業日生效，優惠最長持續至次月；每月需重新達成任務。",
+      "period": "活動期間：2026-07-01～2026-12-30。；每月完成任一任務後，優惠最快次營業日生效，最多適用至2026-12-30。",
+      "interest": "按每日餘額、機動利率及單利計息。；臺幣以元為計息單位，餘額未達10,000元當日不計息。；每半年結息一次，結息日為6月20日及12月20日；例假日依銀行系統作業日。",
+      "transfer": "跨行轉帳與提款共用30次／月；官方未拆分個別次數。優惠生效後可於自動化通路使用，未使用次數不得遞延。",
+      "withdraw": "跨行提款與轉帳共用30次／月；官方未拆分個別次數。依營業日系統作業時間歸屬當月次數。",
+      "benefits": "凱基證券交割戶每月最高3次股票公開申購手續費回饋。；基金定期定額申購手續費0元，單次扣款金額上限10萬元。；符合資格的新證券戶另有臺股交易手續費優惠。",
+      "change": "補入凱基官方友善金融利率頁的活期儲蓄存款0.805%；移除牌告區段的示意值與缺漏標示。",
+      "notes": "活動不得與其他凱基臺外幣優惠利率重複。；薪轉戶以薪轉公司優惠為主，不能重複參加。；牌告利率可能調整，頁面顯示值以查核日2026/7/16為準。",
+      "third_party_note": "",
+      "third_party_sources": [],
+      "sources": [
+        {
+          "label": "凱基 Karry 新戶活動與完整Q&A",
+          "url": "https://www.kgibank.com.tw/webpages/digital-deposit-nd3-campaign/index.html"
+        },
+        {
+          "label": "凱基 Karry 既有戶活動",
+          "url": "https://www.kgibank.com.tw/zh-tw/personal/promotion/campaign-listing-deposit/digital-deposit-d2od3"
+        },
+        {
+          "label": "凱基銀行官方友善金融臺幣存款利率",
+          "url": "https://www.kgibank.com/kgibank/Accessibility/Deposit_rate_tw/"
+        },
+        {
+          "label": "凱基銀行臺幣利率查詢",
+          "url": "https://www.kgibank.com.tw/zh-tw/personal/interest-rate?category=deposit"
+        }
+      ],
+      "tier_diagrams": [
+        {
+          "label": "新戶Karry方案",
+          "description": "新戶前5萬元8.8%；5萬～30萬元按官方2026/7/16活期儲蓄存款牌告0.805%；30萬～300萬元依任務完成後的官方階梯優惠。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～5萬元",
+              "range_amount": 50000,
+              "rate": 8.8,
+              "note": "官方新戶最高級距"
+            },
+            {
+              "range_label": "5萬～30萬元",
+              "range_amount": 250000,
+              "rate": 0.805,
+              "note": "官方活期儲蓄存款牌告"
+            },
+            {
+              "range_label": "30萬～100萬元",
+              "range_amount": 700000,
+              "rate": 1.28,
+              "note": "官方確認"
+            },
+            {
+              "range_label": "100萬～200萬元",
+              "range_amount": 1000000,
+              "rate": 1.78,
+              "note": "官方確認"
+            },
+            {
+              "range_label": "200萬～300萬元",
+              "range_amount": 1000000,
+              "rate": 1.98,
+              "note": "官方確認"
+            }
+          ]
+        },
+        {
+          "label": "既有戶Karry方案",
+          "description": "既有戶前30萬元按官方2026/7/16活期儲蓄存款牌告0.805%；30萬～300萬元依任務完成後的官方階梯優惠。",
+          "verified": true,
+          "tiers": [
+            {
+              "range_label": "0～30萬元",
+              "range_amount": 300000,
+              "rate": 0.805,
+              "note": "官方活期儲蓄存款牌告"
+            },
+            {
+              "range_label": "30萬～100萬元",
+              "range_amount": 700000,
+              "rate": 1.28,
+              "note": "官方確認"
+            },
+            {
+              "range_label": "100萬～200萬元",
+              "range_amount": 1000000,
+              "rate": 1.78,
+              "note": "官方確認"
+            },
+            {
+              "range_label": "200萬～300萬元",
+              "range_amount": 1000000,
+              "rate": 1.98,
+              "note": "官方確認"
+            }
+          ]
+        }
+      ]
     }
   ],
   "missing_data": [
-    {
-      "bank": "兆豐 MegaLite",
-      "field": "目前固定百分比",
-      "severity": "中",
-      "status": "官方提供公式；固定值未擷取",
-      "known": "官方確認為「兆豐活期儲蓄存款機動利率＋0.395%」，10萬元內適用。",
-      "missing": "兆豐官方動態利率表未在可讀頁面回傳當日活期儲蓄存款百分比，因此約1.2%仍是第三方換算。",
-      "checked": "MegaLite活動頁、event4詳細頁、兆豐臺幣存放款利率頁。",
-      "sources": [
-        {
-          "label": "MegaLite官方詳細頁",
-          "url": "https://wwwfile.megabank.com.tw/event/megalite/event4.html"
-        },
-        {
-          "label": "兆豐臺幣存放款利率",
-          "url": "https://www.megabank.com.tw/personal/savings/deposit-service/rate/twd-rate"
-        }
-      ]
-    },
     {
       "bank": "土地銀行 數位帳戶",
       "field": "固定付息日",

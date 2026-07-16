@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>台灣數位帳戶比較｜2026年7月</title>
 <link rel="stylesheet" href="assets/style.css">
-<link rel="shortcut icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
 <header class="home-header">
@@ -42,14 +42,43 @@
           <p>點擊銀行名稱可查看利率級距、有效利率曲線、資格任務、付息規則與來源。</p>
         </div>
         <div class="table-wrap">
-          <table>
-            <thead><tr>
-              <th>#</th><th>銀行／帳戶</th><th>新戶最高</th><th>既有戶最高</th>
-              <th>級距／摘要</th><th>條件</th><th>促銷期間</th><th>計息／付息</th>
-              <th>跨轉</th><th>跨提</th><th>本期變動</th><th>來源</th>
-            </tr></thead>
-            <tbody id="comparisonBody"></tbody>
-          </table>
+          
+
+<table class="comparison-table">
+  <colgroup>
+    <col class="col-rank">
+    <col class="col-bank">
+    <col class="col-rate-new">
+    <col class="col-rate-existing">
+    <col class="col-tier">
+    <col class="col-conditions">
+    <col class="col-period">
+    <col class="col-transfer">
+    <col class="col-withdraw">
+    <col class="col-sources">
+  </colgroup>
+  <thead>
+    <tr class="group-header">
+      <th rowspan="2">#</th>
+      <th rowspan="2">銀行／帳戶</th>
+      <th colspan="2">最高利率</th>
+      <th rowspan="2">級距／額度</th>
+      <th rowspan="2">資格與任務</th>
+      <th rowspan="2">期間</th>
+      <th colspan="2">跨行優惠</th>
+      <th rowspan="2">來源</th>
+    </tr>
+    <tr class="sub-header">
+      <th>新戶</th>
+      <th>既有戶</th>
+      <th>轉帳</th>
+      <th>提款</th>
+    </tr>
+  </thead>
+  <tbody id="comparisonBody"></tbody>
+</table>
+
+
         </div>
       </section>
     </div>
@@ -84,7 +113,6 @@
             </select>
           </div>
         </div>
-        <label class="check-field"><input id="tieredOnly" type="checkbox"><span>只看分層利率</span></label>
         <button id="resetFilters" class="reset-btn" type="button">重設篩選</button>
         <div class="result-line">依 <strong id="currentSortLabel">新戶最高利率</strong> 排序<br>顯示 <span id="resultCount" class="result-count"></span></div>
       </section>

@@ -62,14 +62,14 @@ function buildComboChart(diagram) {
   for (let index = 0; index <= 5; index += 1) {
     const rate = yMaximum * index / 5;
     const y = yPosition(rate);
-    grid.push(`<line class="chart-grid" x1="${left}" y1="${y}" x2="${width-right}" y2="${y}"/>`);
+    grid.push(`<line class="chart-grid chart-grid-horizontal" x1="${left}" y1="${y}" x2="${width-right}" y2="${y}"/>`);
     grid.push(`<text class="axis-label" x="${left-10}" y="${y+4}" text-anchor="end">${rate.toFixed(rate % 1 ? 1 : 0)}%</text>`);
   }
 
   for (const fraction of [0, 0.25, 0.5, 0.75, 1]) {
     const amount = total * fraction;
     const x = xPosition(amount);
-    grid.push(`<line class="chart-grid vertical" x1="${x}" y1="${top}" x2="${x}" y2="${baseline}"/>`);
+    grid.push(`<line class="chart-grid vertical chart-grid-vertical" x1="${x}" y1="${top}" x2="${x}" y2="${baseline}"/>`);
     grid.push(`<text class="axis-label" x="${x}" y="${baseline+25}" text-anchor="middle">${escapeHtml(amountLabel(amount))}</text>`);
   }
 
