@@ -41,11 +41,19 @@
           <div><div class="section-kicker">FULL COMPARISON</div><h2>完整比較資料</h2></div>
           <p>點擊銀行名稱可查看利率級距、有效利率曲線、資格任務、付息規則與來源。</p>
         </div>
+        <div class="multi-bank-toolbar">
+          <span>已選 <strong id="selectedBankCount">0</strong> 家銀行</span>
+          <div>
+            <button id="clearBankSelection" type="button" disabled>清除選取</button>
+            <button id="openSelectedBanks" type="button" disabled>將已選銀行加入配置工具</button>
+          </div>
+        </div>
         <div class="table-wrap">
           
 
 <table class="comparison-table">
   <colgroup>
+    <col class="col-select">
     <col class="col-rank">
     <col class="col-bank">
     <col class="col-rate-new">
@@ -59,6 +67,7 @@
   </colgroup>
   <thead>
     <tr class="group-header">
+      <th rowspan="2"><input id="selectAllBanks" type="checkbox" aria-label="選取目前顯示的全部銀行"></th>
       <th rowspan="2">#</th>
       <th rowspan="2">銀行／帳戶</th>
       <th colspan="2">最高利率</th>
@@ -86,6 +95,11 @@
     <aside class="home-sidebar">
       <section class="tool-card">
         <div class="tool-card-title"><span>比較工具</span><small>同步控制排行與表格</small></div>
+        <a class="planner-launch-link" href="allocator.html">
+          <strong>現金配置工具</strong>
+          <span>選擇銀行與適用級距，計算剩餘額度</span>
+        </a>
+
         <div class="segmented">
           <button type="button" data-sort-mode="new" class="active">新戶排序</button>
           <button type="button" data-sort-mode="existing">既有戶排序</button>

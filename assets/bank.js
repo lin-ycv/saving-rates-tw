@@ -139,13 +139,14 @@ function buildComboChart(diagram) {
   `;
 }
 
-function renderTierSection(bank) {
+function renderTierSection(bank, activePlanIndex = 0) {
   const diagrams = bank.tier_diagrams || [];
   const tabs = diagrams.map((diagram, index) => `
     <button
       type="button"
-      class="${index === 0 ? "active" : ""}"
+      class="${index === activePlanIndex ? "active" : ""}"
       data-tier-tab="tier-${index}"
+      data-plan-index="${index}"
     >${escapeHtml(diagram.label)}${diagram.verified === false ? "（含未確認資料）" : ""}</button>
   `).join("");
 
@@ -160,7 +161,7 @@ function renderTierSection(bank) {
 
     return `
       <div
-        class="tier-panel ${index === 0 ? "active" : ""}"
+        class="tier-panel ${index === activePlanIndex ? "active" : ""}"
         data-tier-panel="tier-${index}"
       >
         ${diagram.verified === false
@@ -249,10 +250,12 @@ function renderSources(bank) {
   `;
 }
 
-function bindTierTabs() {
+
+function bindTierTabs(bankSlug) {
   document.querySelectorAll("[data-tier-group]").forEach(group => {
     const buttons = group.querySelectorAll("[data-tier-tab]");
     const panels = group.querySelectorAll("[data-tier-panel]");
+    const allocatorLink = document.querySelector(".allocator-bank-link");
 
     buttons.forEach(button => {
       button.addEventListener("click", () => {
@@ -266,12 +269,17 @@ function bindTierTabs() {
             panel.dataset.tierPanel === key,
           )
         );
+
+        if (allocatorLink) {
+          allocatorLink.href =
+            `allocator.html?bank=${encodeURIComponent(bankSlug)}&plan=${button.dataset.planIndex}`;
+        }
       });
     });
   });
 }
 
-function renderBankPage(bank, reportDate) {
+function renderBankPage(bank, reportDate, activePlanIndex = 0) {
   document.title = `${bank.name}｜台灣數位帳戶比較`;
 
   const thirdPartyAlert = (bank.third_party_sources || []).length
@@ -282,7 +290,12 @@ function renderBankPage(bank, reportDate) {
     <header class="detail-hero">
       <div class="detail-container">
         <div class="detail-hero-panel">
-          <a class="back-link" href="index.html">← 返回完整比較</a>
+          
+          <div class="detail-nav-actions">
+            <a class="back-link" href="index.html">← 返回完整比較</a>
+            <a class="allocator-bank-link" href="allocator.html?bank=${encodeURIComponent(bank.slug)}&plan=${activePlanIndex}">加入現金配置工具</a>
+          </div>
+
           <div class="detail-title-row">
             <div>
               <h1>${escapeHtml(bank.name)}</h1>
@@ -314,7 +327,7 @@ function renderBankPage(bank, reportDate) {
 
     <main class="detail-container detail-main">
       ${thirdPartyAlert}
-      ${renderTierSection(bank)}
+      ${renderTierSection(bank, activePlanIndex)}
       <section class="detail-card">
         <h2>詳細資料</h2>
         <p class="intro">所有資料均從 data.json 即時載入；長條件使用分段與條列呈現。</p>
@@ -328,7 +341,7 @@ function renderBankPage(bank, reportDate) {
     </footer>
   `;
 
-  bindTierTabs();
+  bindTierTabs(bank.slug);
 }
 
 async function start() {
@@ -336,8 +349,15 @@ async function start() {
 
   try {
     const report = await loadReport();
-    const slug = new URLSearchParams(window.location.search).get("bank");
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("bank");
     const bank = report.banks.find(item => item.slug === slug);
+    const requestedPlan = Number(params.get("plan"));
+    const activePlanIndex = Number.isInteger(requestedPlan) &&
+      requestedPlan >= 0 &&
+      requestedPlan < (bank?.tier_diagrams || []).length
+      ? requestedPlan
+      : 0;
 
     if (!slug || !bank) {
       container.innerHTML = `
@@ -353,7 +373,7 @@ async function start() {
       return;
     }
 
-    renderBankPage(bank, report.report_date);
+    renderBankPage(bank, report.report_date, activePlanIndex);
   } catch (error) {
     showPageError(container, error);
   }

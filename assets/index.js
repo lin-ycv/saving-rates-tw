@@ -10,6 +10,8 @@ import {
 } from "./common.js";
 
 let banks = [];
+let selectedBankSlugs = new Set();
+
 let state = {
   sortMode: "new",
   query: "",
@@ -49,16 +51,21 @@ function filteredBanks() {
     ].join(" ").toLowerCase();
 
     if (query && !searchText.includes(query)) return false;
+
     if (
       state.verification !== "all" &&
       verificationGroup(bank) !== state.verification
-    ) return false;
+    ) {
+      return false;
+    }
 
     const activeRate = rateFor(bank, state.sortMode);
     if (
       state.minRate > 0 &&
       (activeRate == null || activeRate < state.minRate)
-    ) return false;
+    ) {
+      return false;
+    }
 
     return true;
   }));
@@ -128,7 +135,6 @@ function renderChart(items) {
   }).join("") || '<div class="empty-state">沒有符合目前篩選條件的帳戶。</div>';
 }
 
-
 function compactLines(value, maximum = 3) {
   const parts = String(value || "")
     .replace(/(?=[①②③④⑤⑥⑦⑧⑨⑩])/g, "；")
@@ -149,24 +155,44 @@ function compactLines(value, maximum = 3) {
   `;
 }
 
-function ratePair(bank) {
-  return `
-    <div class="rate-pair">
-      <div>
-        <span class="compact-label">新戶</span>
-        <strong>${escapeHtml(bank.new_rate_text)}</strong>
-        ${rateBadge(bank.new_rate_verified)}
-      </div>
-      <div>
-        <span class="compact-label">既有戶</span>
-        <strong>${escapeHtml(bank.existing_rate_text)}</strong>
-        ${rateBadge(bank.existing_rate_verified)}
-      </div>
-    </div>
-  `;
+function updateSelectionToolbar(visibleItems = filteredBanks()) {
+  const count = selectedBankSlugs.size;
+  const countElement = document.getElementById("selectedBankCount");
+  const clearButton = document.getElementById("clearBankSelection");
+  const openButton = document.getElementById("openSelectedBanks");
+  const selectAll = document.getElementById("selectAllBanks");
+  const visibleSlugs = visibleItems.map(bank => bank.slug);
+  const selectedVisible = visibleSlugs.filter(slug =>
+    selectedBankSlugs.has(slug)
+  ).length;
+
+  countElement.textContent = count;
+  clearButton.disabled = count === 0;
+  openButton.disabled = count === 0;
+
+  selectAll.checked =
+    visibleSlugs.length > 0 && selectedVisible === visibleSlugs.length;
+  selectAll.indeterminate =
+    selectedVisible > 0 && selectedVisible < visibleSlugs.length;
 }
 
+function bindTableSelection(items) {
+  document.querySelectorAll("[data-bank-select]").forEach(input => {
+    input.addEventListener("change", event => {
+      const slug = event.target.dataset.bankSelect;
 
+      if (event.target.checked) {
+        selectedBankSlugs.add(slug);
+      } else {
+        selectedBankSlugs.delete(slug);
+      }
+
+      updateSelectionToolbar(items);
+    });
+  });
+
+  updateSelectionToolbar(items);
+}
 
 function renderTable(items) {
   const body = document.getElementById("comparisonBody");
@@ -183,6 +209,14 @@ function renderTable(items) {
 
     return `
       <tr>
+        <td class="select-cell">
+          <input
+            type="checkbox"
+            data-bank-select="${escapeHtml(bank.slug)}"
+            aria-label="選取${escapeHtml(bank.name)}"
+            ${selectedBankSlugs.has(bank.slug) ? "checked" : ""}
+          >
+        </td>
         <td class="rank-cell">${index + 1}</td>
         <td class="name-cell">
           <a href="${bankUrl(bank)}">${escapeHtml(bank.name)}</a><br>
@@ -212,13 +246,14 @@ function renderTable(items) {
     `;
   }).join("") || `
     <tr>
-      <td colspan="10">
+      <td colspan="11">
         <div class="empty-state">沒有符合目前篩選條件的帳戶。</div>
       </td>
     </tr>
   `;
-}
 
+  bindTableSelection(items);
+}
 
 function render() {
   const items = filteredBanks();
@@ -262,12 +297,39 @@ function bindControls() {
     render();
   });
 
+  document.getElementById("selectAllBanks").addEventListener("change", event => {
+    const items = filteredBanks();
+
+    items.forEach(bank => {
+      if (event.target.checked) {
+        selectedBankSlugs.add(bank.slug);
+      } else {
+        selectedBankSlugs.delete(bank.slug);
+      }
+    });
+
+    renderTable(items);
+  });
+
+  document.getElementById("clearBankSelection").addEventListener("click", () => {
+    selectedBankSlugs.clear();
+    renderTable(filteredBanks());
+  });
+
+  document.getElementById("openSelectedBanks").addEventListener("click", () => {
+    if (!selectedBankSlugs.size) return;
+
+    const url = new URL("allocator.html", window.location.href);
+    url.searchParams.set("banks", [...selectedBankSlugs].join(","));
+    window.location.href = url.href;
+  });
+
   document.getElementById("resetFilters").addEventListener("click", () => {
     state = {
       sortMode: "new",
       query: "",
       verification: "all",
-          minRate: 0,
+      minRate: 0,
     };
     document.getElementById("bankSearch").value = "";
     document.getElementById("verificationFilter").value = "all";

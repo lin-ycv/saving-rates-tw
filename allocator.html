@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>現金配置工具｜台灣數位帳戶比較</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body class="allocator-body">
+  <header class="allocator-header">
+    <div class="allocator-container">
+      <div class="allocator-hero">
+        <div>
+          <div class="eyebrow">CASH ALLOCATION PLANNER</div>
+          <h1>現金配置工具</h1>
+          <p>每家銀行選擇一個你實際符合資格的方案，輸入該帳戶總餘額；工具會自動套用完整利率級距、計算剩餘額度與預估一年利息。</p>
+        </div>
+        <div class="allocator-hero-actions">
+          <a class="allocator-home-link" href="index.html">← 返回完整比較</a>
+          <span>資料日期 <strong id="allocatorReportDate">載入中…</strong></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="allocator-container allocator-main" id="allocatorPage">
+    <section class="allocator-card allocator-intro">
+      <div>
+        <h2>使用方式</h2>
+        <p>每家銀行只保留一個方案。選擇同一家銀行的另一個方案時，會取代原方案。輸入的是整個帳戶餘額，系統會依順序自動分配至各個利率級距。</p>
+      </div>
+      <div class="privacy-note">
+        <strong>隱私設計</strong>
+        <p>銀行與方案選擇只儲存在此瀏覽器的 localStorage，不會傳送到伺服器。帳戶金額預設不儲存，除非你主動勾選。</p>
+      </div>
+    </section>
+
+    <section class="allocator-summary" aria-label="現金摘要">
+      <article class="allocator-stat">
+        <span>帳戶現金合計</span>
+        <strong id="accountCashTotal">NT$0</strong>
+      </article>
+      <article class="allocator-stat">
+        <span>待配置現金</span>
+        <strong id="unallocatedCashSummary">NT$0</strong>
+      </article>
+      <article class="allocator-stat allocator-stat-primary">
+        <span>現金總額</span>
+        <strong id="cashGrandTotal">NT$0</strong>
+      </article>
+      <article class="allocator-stat allocator-stat-interest">
+        <span>預估一年利息</span>
+        <strong id="annualInterestTotal">NT$0</strong>
+        <small id="annualInterestNote">未計稅與複利</small>
+      </article>
+      <article class="allocator-stat">
+        <span>已配置有效年利率</span>
+        <strong id="portfolioEffectiveRate">0.000%</strong>
+      </article>
+      <article class="allocator-stat">
+        <span>已知優惠剩餘額度</span>
+        <strong id="remainingCapacityTotal">NT$0</strong>
+      </article>
+      <article class="allocator-stat allocator-stat-danger">
+        <span>超出已知優惠額度</span>
+        <strong id="overCapacityTotal">NT$0</strong>
+      </article>
+    </section>
+
+    <section class="allocator-card">
+      <div class="allocator-section-heading">
+        <div>
+          <div class="section-kicker">ADD ELIGIBLE PLAN</div>
+          <h2>加入銀行與適用方案</h2>
+        </div>
+        <p>同一家銀行只能選擇一個方案；重新加入會取代該銀行原有方案與金額。</p>
+      </div>
+
+      <div class="allocator-add-grid">
+        <div class="field">
+          <label for="allocatorBank">銀行／帳戶</label>
+          <select id="allocatorBank">
+            <option value="">選擇銀行</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="allocatorPlan">你符合的方案</label>
+          <select id="allocatorPlan" disabled>
+            <option value="">先選擇銀行</option>
+          </select>
+        </div>
+        <button class="allocator-add-button" id="addAllocatorPlan" type="button" disabled>加入／取代方案</button>
+      </div>
+
+      <div class="allocator-settings">
+        <label class="allocator-save-toggle">
+          <input id="persistBalances" type="checkbox">
+          <span>
+            <strong>在此裝置儲存各帳戶金額</strong>
+            <small>關閉時仍會記住銀行與方案，但重新整理後金額會清空。</small>
+          </span>
+        </label>
+
+        <div class="allocator-config-actions">
+          <button id="exportAllocator" class="allocator-export-button" type="button">匯出設定</button>
+          <label class="allocator-import-button">
+            <span>匯入設定</span>
+            <input id="importAllocator" type="file" accept=".json,application/json">
+          </label>
+          <button id="resetAllocator" class="allocator-reset-button" type="button">清除所有已儲存設定</button>
+        </div>
+      </div>
+
+      <p class="allocator-transfer-note">
+        匯出檔為精簡JSON，包含目前方案、金額、待配置現金與超額保留選項。檔案為純文字，請視為個人財務資料妥善保管。
+      </p>
+      <div id="allocatorNotice" class="allocator-notice" hidden></div>
+    </section>
+
+    <section class="allocator-card">
+      <div class="allocator-section-heading">
+        <div>
+          <div class="section-kicker">YOUR ACCOUNTS</div>
+          <h2>目前配置</h2>
+        </div>
+        <p>綠色代表剛好達到優惠上限；紅色代表本金已進入促銷方案後方的牌告利率區段，或超出所有已知級距。</p>
+      </div>
+      <div id="allocatorRows" class="allocator-rows"></div>
+      <div id="allocatorEmpty" class="allocator-empty">尚未加入任何銀行方案。</div>
+    </section>
+
+    <section class="allocator-card allocator-recommendation-card">
+      <div class="allocator-section-heading">
+        <div>
+          <div class="section-kicker">NEXT DEPOSIT</div>
+          <h2>待配置現金建議</h2>
+        </div>
+        <p>工具會逐段比較目前下一個可用的邊際利率，並遵守每個方案的級距順序。若帳戶已有牌告利率超額，預設也會試算轉出至更高利率方案。</p>
+      </div>
+
+      <div class="allocator-cash-input">
+        <label for="unallocatedCash">目前尚未放入上述帳戶的現金</label>
+        <div class="money-input-wrap">
+          <span>NT$</span>
+          <input id="unallocatedCash" type="text" inputmode="numeric" autocomplete="off" value="0">
+        </div>
+      </div>
+
+      <div id="recommendationList" class="recommendation-list"></div>
+      <div id="recommendationEmpty" class="allocator-empty">輸入待配置現金並加入至少一個具有可計算額度的方案，即可產生建議。</div>
+      <div id="unassignedCash" class="unassigned-cash" hidden></div>
+    </section>
+
+    <section class="allocator-card allocator-disclaimer">
+      <h2>重要說明</h2>
+      <ul>
+        <li>每個帳戶只選一個方案；方案內所有級距會自動依本金順序計算，不需要手動拆分。</li>
+        <li>預估一年利息使用名目年利率做單利試算，未計所得稅、補充保費、複利、利率變動及實際計息天數差異。</li>
+        <li>若促銷方案後方只有牌告利率，該段會標示為超出優惠額度；除非你勾選保留，配置建議會嘗試把它轉到更高利率的可用級距。</li>
+        <li>只有牌告利率、沒有促銷級距的帳戶不會被視為超額；「額度未確認」的部分不納入自動配置。</li>
+        <li>若方案版本改變，工具會先尋找相同級距與利率的方案；找不到時改用保守的既有戶低利率方案；若銀行已移除或沒有可用方案，原帳戶金額會移至待配置現金。</li>
+        <li>本工具只做現金配置試算，不構成存款、投資或稅務建議。</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="allocator-container detail-footer">本頁資料來自 data.json；外部銀行來源需要網路連線。</footer>
+  <script type="module" src="assets/allocator.js"></script>
+</body>
+</html>
