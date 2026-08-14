@@ -42,7 +42,7 @@
         <strong id="accountCashTotal">NT$0</strong>
       </article>
       <article class="allocator-stat">
-        <span>待配置現金</span>
+        <span>待配置／預計支出</span>
         <strong id="unallocatedCashSummary">NT$0</strong>
       </article>
       <article class="allocator-stat allocator-stat-primary">
@@ -133,23 +133,33 @@
     <section class="allocator-card allocator-recommendation-card">
       <div class="allocator-section-heading">
         <div>
-          <div class="section-kicker">NEXT DEPOSIT</div>
-          <h2>待配置現金建議</h2>
+          <div class="section-kicker">NEXT DEPOSIT / SPEND</div>
+          <h2>待配置與支出建議</h2>
         </div>
-        <p>工具會逐段比較目前下一個可用的邊際利率，並遵守每個方案的級距順序。若帳戶已有牌告利率超額，預設也會試算轉出至更高利率方案。</p>
+        <p>輸入正數時，工具會先安排新資金，再檢查現有帳戶是否有低利率資金可移往仍有容量的較高利率級距；輸入負數時，工具會建議從哪些帳戶支出。</p>
       </div>
 
       <div class="allocator-cash-input">
-        <label for="unallocatedCash">目前尚未放入上述帳戶的現金</label>
-        <div class="money-input-wrap">
+        <label for="unallocatedCash">待配置現金；輸入負數代表預計支出／提款</label>
+        <div class="money-input-wrap signed-money-input">
           <span>NT$</span>
-          <input id="unallocatedCash" type="text" inputmode="numeric" autocomplete="off" value="0">
+          <input id="unallocatedCash" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="cashSignHelp">
+          <button id="toggleCashSign" class="cash-sign-toggle" type="button" aria-label="切換待配置現金的正負號">±</button>
         </div>
+        <small id="cashSignHelp" class="cash-sign-help">例如：500,000 表示要存入；−50,000 表示要支出或提款。</small>
       </div>
 
       <div id="recommendationList" class="recommendation-list"></div>
-      <div id="recommendationEmpty" class="allocator-empty">輸入待配置現金並加入至少一個具有可計算額度的方案，即可產生建議。</div>
+      <div id="recommendationEmpty" class="allocator-empty">輸入正數可取得存入建議；輸入負數可取得支出來源建議。</div>
       <div id="unassignedCash" class="unassigned-cash" hidden></div>
+
+      <div id="recommendationApplyBar" class="recommendation-apply-bar" hidden>
+        <div>
+          <strong>已完成實際轉帳與存款？</strong>
+          <span id="recommendationApplySummary"></span>
+        </div>
+        <button id="applyRecommendations" type="button">已依建議完成配置</button>
+      </div>
     </section>
 
     <section class="allocator-card allocator-disclaimer">
@@ -157,9 +167,12 @@
       <ul>
         <li>每個帳戶只選一個方案；方案內所有級距會自動依本金順序計算，不需要手動拆分。</li>
         <li>預估一年利息使用名目年利率做單利試算，未計所得稅、補充保費、複利、利率變動及實際計息天數差異。</li>
-        <li>若促銷方案後方只有牌告利率，該段會標示為超出優惠額度；除非你勾選保留，配置建議會嘗試把它轉到更高利率的可用級距。</li>
+        <li>正數配置完成後，工具會再比較所有帳戶目前最後占用的邊際利率；只要其他帳戶仍有更高利率容量，就會建議轉出與轉入，不限於促銷牌告超額。</li>
+        <li>若促銷方案後方只有牌告利率，該段會標示為超出優惠額度；勾選保留後，該牌告超額不會被轉出。</li>
         <li>只有牌告利率、沒有促銷級距的帳戶不會被視為超額；「額度未確認」的部分不納入自動配置。</li>
         <li>若方案版本改變，工具會先尋找相同級距與利率的方案；找不到時改用保守的既有戶低利率方案；若銀行已移除或沒有可用方案，原帳戶金額會移至待配置現金。</li>
+        <li>待配置現金可為負數；負數代表你準備支出或提款，工具會從目前最不具利息價值的資金開始建議來源。</li>
+        <li>按下「已依建議完成配置」前，請先確認你已在銀行端完成相同的存款、轉帳或支出；按鈕只更新本工具中的帳戶餘額。</li>
         <li>本工具只做現金配置試算，不構成存款、投資或稅務建議。</li>
       </ul>
     </section>

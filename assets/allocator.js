@@ -6,13 +6,15 @@ import {
   showPageError,
 } from "./common.js";
 
-const STORAGE_KEY = "taiwanSavingsAllocator.v4";
+const STORAGE_KEY = "taiwanSavingsAllocator.v6";
 const LEGACY_STORAGE_KEYS = [
+  "taiwanSavingsAllocator.v5",
+  "taiwanSavingsAllocator.v4",
   "taiwanSavingsAllocator.v3",
   "taiwanSavingsAllocator.v2",
   "taiwanSavingsAllocator.v1",
 ];
-const STORAGE_VERSION = 4;
+const STORAGE_VERSION = 6;
 const EXPORT_VERSION = 2;
 const RATE_EPSILON = 0.000001;
 
@@ -95,6 +97,73 @@ function formatMoneyInputElement(input) {
   } catch {
     // Ignore browsers that do not expose a selection range.
   }
+}
+
+function parseSignedMoney(value) {
+  const text = String(value ?? "").trim();
+  const isNegative =
+    /^[-−]/u.test(text) ||
+    (typeof value === "number" && value < 0);
+  const digits = text.replace(/[^\d]/gu, "");
+
+  if (!digits) return 0;
+
+  const number = Number(digits);
+  if (!Number.isFinite(number)) return 0;
+
+  const amount = Math.min(
+    Math.round(number),
+    Number.MAX_SAFE_INTEGER,
+  );
+  return isNegative ? -amount : amount;
+}
+
+function formatSignedInputMoney(value) {
+  const amount = parseSignedMoney(value);
+  if (amount < 0) {
+    return `-${formatInputMoney(Math.abs(amount))}`;
+  }
+  return formatInputMoney(amount);
+}
+
+function formatSignedMoneyInputElement(input) {
+  const raw = input.value;
+  const trimmed = raw.trim();
+
+  // Keep a standalone minus sign so the user can type the amount after it.
+  if (trimmed === "-" || trimmed === "−") {
+    input.value = "-";
+    try {
+      input.setSelectionRange(1, 1);
+    } catch {}
+    return;
+  }
+
+  const cursor = input.selectionStart ?? raw.length;
+  const digitsBeforeCursor = raw
+    .slice(0, cursor)
+    .replace(/[^\d]/gu, "")
+    .length;
+  const formatted = formatSignedInputMoney(raw);
+  input.value = formatted;
+
+  const signOffset = formatted.startsWith("-") ? 1 : 0;
+  let nextCursor = signOffset;
+  let seenDigits = 0;
+
+  while (
+    nextCursor < formatted.length &&
+    seenDigits < digitsBeforeCursor
+  ) {
+    if (/\d/u.test(formatted[nextCursor])) {
+      seenDigits += 1;
+    }
+    nextCursor += 1;
+  }
+
+  try {
+    input.setSelectionRange(nextCursor, nextCursor);
+  } catch {}
 }
 
 function formatRate(value, digits = 3) {
@@ -518,7 +587,7 @@ function loadState() {
   document.getElementById("persistBalances").checked = persistBalances;
 
   let recoveredUnallocated = persistBalances
-    ? parseMoney(saved.unallocatedCash)
+    ? parseSignedMoney(saved.unallocatedCash)
     : 0;
   const restored = [];
   const seenBanks = new Set();
@@ -568,7 +637,7 @@ function loadState() {
   selections = restored;
   unallocatedCash = recoveredUnallocated;
   document.getElementById("unallocatedCash").value =
-    formatInputMoney(unallocatedCash);
+    formatSignedInputMoney(unallocatedCash);
 
   try {
     LEGACY_STORAGE_KEYS.forEach(key => localStorage.removeItem(key));
@@ -1001,9 +1070,9 @@ function renderSummary() {
   document.getElementById("accountCashTotal").textContent =
     formatMoney(summary.accountTotal);
   document.getElementById("unallocatedCashSummary").textContent =
-    formatMoney(unallocatedCash);
+    signedMoney(unallocatedCash);
   document.getElementById("cashGrandTotal").textContent =
-    formatMoney(summary.grandTotal);
+    signedMoney(summary.grandTotal);
   document.getElementById("annualInterestTotal").textContent =
     formatMoney(summary.annualInterest);
   document.getElementById("annualInterestNote").textContent =
@@ -1055,6 +1124,7 @@ function allocateMarginalPool({
   virtualBalances,
   minimumRate = -Infinity,
   sourceLabel = "",
+  sourceType = "unallocated",
 }) {
   let remaining = amount;
   const deposits = [];
@@ -1103,6 +1173,7 @@ function allocateMarginalPool({
       targetBalance,
       addedInterest,
       sourceLabel,
+      sourceType,
     });
 
     virtualBalances.set(best.plan.id, targetBalance);
@@ -1145,104 +1216,593 @@ function overflowSources() {
     });
 }
 
-function buildRecommendations() {
+
+function currentWithdrawalSegment(plan, balance) {
+  const calculation = calculatePlanInterest(plan, balance);
+
+  if (calculation.overAmount > 0) {
+    return {
+      plan,
+      tier: null,
+      available: calculation.overAmount,
+      rate: null,
+      priority: 0,
+      label: "超出已知級距",
+    };
+  }
+
+  if (calculation.unknownAmount > 0) {
+    const unknownAllocation = [...calculation.allocations]
+      .reverse()
+      .find(item =>
+        item.used > 0 &&
+        item.tier.capacityMode === "unknown"
+      );
+
+    return {
+      plan,
+      tier: unknownAllocation?.tier || null,
+      available: calculation.unknownAmount,
+      rate: null,
+      priority: 0,
+      label: unknownAllocation?.tier?.displayLabel || "額度／利率未確認",
+    };
+  }
+
+  const occupied = [...calculation.allocations]
+    .reverse()
+    .find(item => item.used > 0);
+
+  if (!occupied) return null;
+
+  return {
+    plan,
+    tier: occupied.tier,
+    available: occupied.used,
+    rate: occupied.tier.rate,
+    priority: occupied.tier.isTrailingPostedOverflow ? 1 : 2,
+    label: occupied.tier.displayLabel,
+  };
+}
+
+function buildSpendingRecommendations() {
+  let remainingNeed = Math.abs(unallocatedCash);
   const virtualBalances = new Map(
-    selections.map(selection => [selection.planId, selection.balance])
+    selections.map(selection => [
+      selection.planId,
+      selection.balance,
+    ])
   );
+  const actions = [];
 
-  const sourceOverflows = overflowSources();
+  while (remainingNeed > 0) {
+    const candidates = selections
+      .map(selection => {
+        const plan = plansById.get(selection.planId);
+        const balance = virtualBalances.get(selection.planId) || 0;
+        const segment = currentWithdrawalSegment(plan, balance);
 
-  // Temporarily remove all eligible posted-rate overflow before testing
-  // whether it can be moved to a higher currently available marginal tier.
-  sourceOverflows.forEach(source => {
-    virtualBalances.set(source.plan.id, source.targetBalance);
-  });
+        if (!segment || segment.available <= 0) return null;
 
+        // A user who explicitly preserves posted overflow has asked the
+        // allocator not to touch that account's trailing overflow.
+        if (
+          selection.ignoreOverflowReallocation &&
+          segment.tier?.isTrailingPostedOverflow
+        ) {
+          return null;
+        }
+
+        return {
+          ...segment,
+          selection,
+          balance,
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => {
+        if (a.priority !== b.priority) {
+          return a.priority - b.priority;
+        }
+
+        const aRate = a.rate == null
+          ? Number.NEGATIVE_INFINITY
+          : a.rate;
+        const bRate = b.rate == null
+          ? Number.NEGATIVE_INFINITY
+          : b.rate;
+
+        if (aRate !== bRate) return aRate - bRate;
+        return a.plan.bankName.localeCompare(
+          b.plan.bankName,
+          "zh-Hant",
+        );
+      });
+
+    const best = candidates[0];
+    if (!best) break;
+
+    const amount = Math.min(
+      remainingNeed,
+      best.available,
+      best.balance,
+    );
+    if (amount <= 0) break;
+
+    const targetBalance = best.balance - amount;
+    const lostInterest = best.rate == null
+      ? null
+      : amount * best.rate / 100;
+
+    actions.push({
+      type: "spend",
+      plan: best.plan,
+      tier: best.tier,
+      amount,
+      rate: best.rate,
+      targetBalance,
+      lostInterest,
+      sourceLabel: best.label,
+    });
+
+    virtualBalances.set(best.plan.id, targetBalance);
+    remainingNeed -= amount;
+  }
+
+  return {
+    actions,
+    unassignedCash: remainingNeed > 0 ? -remainingNeed : 0,
+    retainedOverflow: [],
+  };
+}
+
+
+function buildCurrentAllocationRebalancing(virtualBalances) {
+  const actions = [];
+
+  while (true) {
+    const sources = selections
+      .map(selection => {
+        const plan = plansById.get(selection.planId);
+        const balance = virtualBalances.get(plan.id) || 0;
+        const segment = currentWithdrawalSegment(plan, balance);
+
+        if (!segment || segment.available <= 0) return null;
+
+        if (
+          selection.ignoreOverflowReallocation &&
+          segment.tier?.isTrailingPostedOverflow
+        ) {
+          return null;
+        }
+
+        return {
+          ...segment,
+          selection,
+          balance,
+          comparableRate: segment.rate == null
+            ? Number.NEGATIVE_INFINITY
+            : segment.rate,
+        };
+      })
+      .filter(Boolean);
+
+    const destinations = selections
+      .map(selection => {
+        const plan = plansById.get(selection.planId);
+        const balance = virtualBalances.get(plan.id) || 0;
+        const segment = nextRecommendationSegment(plan, balance);
+
+        if (!segment || segment.available <= 0) return null;
+
+        return {
+          ...segment,
+          selection,
+          balance,
+        };
+      })
+      .filter(Boolean);
+
+    const pairs = [];
+
+    sources.forEach(source => {
+      destinations.forEach(destination => {
+        if (source.plan.id === destination.plan.id) return;
+
+        if (
+          destination.rate <=
+          source.comparableRate + RATE_EPSILON
+        ) {
+          return;
+        }
+
+        pairs.push({
+          source,
+          destination,
+          gain:
+            destination.rate - source.comparableRate,
+        });
+      });
+    });
+
+    pairs.sort((a, b) => {
+      if (b.gain !== a.gain) return b.gain - a.gain;
+      if (
+        b.destination.rate !==
+        a.destination.rate
+      ) {
+        return (
+          b.destination.rate -
+          a.destination.rate
+        );
+      }
+      if (
+        a.source.comparableRate !==
+        b.source.comparableRate
+      ) {
+        return (
+          a.source.comparableRate -
+          b.source.comparableRate
+        );
+      }
+      return a.destination.plan.bankName.localeCompare(
+        b.destination.plan.bankName,
+        "zh-Hant",
+      );
+    });
+
+    const best = pairs[0];
+    if (!best) break;
+
+    const amount = Math.min(
+      best.source.available,
+      best.source.balance,
+      best.destination.available,
+    );
+
+    if (!Number.isFinite(amount) || amount <= 0) break;
+
+    const sourceTarget =
+      best.source.balance - amount;
+    const destinationTarget =
+      best.destination.balance + amount;
+    const sourceRate = best.source.rate;
+    const addedInterest =
+      amount * best.destination.rate / 100;
+    const previousInterest =
+      sourceRate == null
+        ? null
+        : amount * sourceRate / 100;
+    const annualInterestGain =
+      previousInterest == null
+        ? null
+        : addedInterest - previousInterest;
+    const sourceLabel =
+      best.source.label ||
+      best.source.tier?.displayLabel ||
+      "目前使用級距";
+
+    actions.push({
+      type: "withdraw",
+      plan: best.source.plan,
+      tier: best.source.tier,
+      amount,
+      rate: sourceRate,
+      targetBalance: sourceTarget,
+      sourceLabel,
+      transferKind:
+        best.source.tier?.isTrailingPostedOverflow
+          ? "posted-overflow"
+          : "general-rebalance",
+      destinationPlan: best.destination.plan,
+      destinationTier: best.destination.tier,
+      destinationRate: best.destination.rate,
+      annualInterestGain,
+    });
+
+    actions.push({
+      type: "deposit",
+      plan: best.destination.plan,
+      tier: best.destination.tier,
+      amount,
+      rate: best.destination.rate,
+      targetBalance: destinationTarget,
+      addedInterest,
+      sourceLabel:
+        `由 ${best.source.plan.bankName} ${sourceLabel} 轉入`,
+      sourceType: "rebalance",
+      sourcePlan: best.source.plan,
+      sourceRate,
+      annualInterestGain,
+    });
+
+    virtualBalances.set(
+      best.source.plan.id,
+      sourceTarget,
+    );
+    virtualBalances.set(
+      best.destination.plan.id,
+      destinationTarget,
+    );
+  }
+
+  return actions;
+}
+
+function buildRecommendations() {
+  if (unallocatedCash < 0) {
+    return buildSpendingRecommendations();
+  }
+
+  const virtualBalances = new Map(
+    selections.map(selection => [
+      selection.planId,
+      selection.balance,
+    ])
+  );
   const actions = [];
 
   const unallocatedResult = allocateMarginalPool({
     amount: unallocatedCash,
     virtualBalances,
     sourceLabel: "待配置現金",
+    sourceType: "unallocated",
   });
   actions.push(...unallocatedResult.deposits);
 
-  const retainedOverflow = [];
-
-  sourceOverflows.forEach(source => {
-    const result = allocateMarginalPool({
-      amount: source.amount,
+  // Audit and optimize existing balances after new cash is placed.
+  // This runs even when unallocatedCash is zero.
+  actions.push(
+    ...buildCurrentAllocationRebalancing(
       virtualBalances,
-      minimumRate: source.rate,
-      sourceLabel: `由 ${source.plan.bankName} 牌告超額轉入`,
-    });
-
-    if (result.allocated > 0) {
-      actions.push({
-        type: "withdraw",
-        plan: source.plan,
-        amount: result.allocated,
-        rate: source.rate,
-        targetBalance: source.selection.balance - result.allocated,
-      });
-      actions.push(...result.deposits);
-    }
-
-    if (result.remaining > 0) {
-      retainedOverflow.push({
-        source,
-        amount: result.remaining,
-      });
-      virtualBalances.set(
-        source.plan.id,
-        source.targetBalance + result.remaining,
-      );
-    }
-  });
+    ),
+  );
 
   return {
     actions,
     unassignedCash: unallocatedResult.remaining,
-    retainedOverflow,
+    retainedOverflow: [],
   };
+}
+
+function recommendationApplyTotals(result) {
+  const unallocatedDeposits = result.actions
+    .filter(item =>
+      item.type === "deposit" &&
+      item.sourceType === "unallocated"
+    )
+    .reduce((sum, item) => sum + item.amount, 0);
+
+  const rebalancingTransfers = result.actions
+    .filter(item => item.type === "withdraw")
+    .reduce((sum, item) => sum + item.amount, 0);
+
+  const postedOverflowTransfers = result.actions
+    .filter(item =>
+      item.type === "withdraw" &&
+      item.transferKind === "posted-overflow"
+    )
+    .reduce((sum, item) => sum + item.amount, 0);
+
+  const spendingWithdrawals = result.actions
+    .filter(item => item.type === "spend")
+    .reduce((sum, item) => sum + item.amount, 0);
+
+  const depositActions = result.actions.filter(
+    item => item.type === "deposit"
+  ).length;
+  const withdrawalActions = result.actions.filter(
+    item => item.type === "withdraw"
+  ).length;
+  const spendingActions = result.actions.filter(
+    item => item.type === "spend"
+  ).length;
+
+  return {
+    unallocatedDeposits,
+    rebalancingTransfers,
+    postedOverflowTransfers,
+    spendingWithdrawals,
+    depositActions,
+    withdrawalActions,
+    spendingActions,
+  };
+}
+
+function recommendationApplySummary(result) {
+  const totals = recommendationApplyTotals(result);
+  const parts = [];
+
+  if (totals.unallocatedDeposits > 0) {
+    parts.push(
+      `配置待配置現金 ${formatMoney(totals.unallocatedDeposits)}`
+    );
+  }
+
+  if (totals.rebalancingTransfers > 0) {
+    parts.push(
+      `重新配置帳戶資金 ${formatMoney(totals.rebalancingTransfers)}`
+    );
+  }
+
+  if (totals.spendingWithdrawals > 0) {
+    parts.push(
+      `從帳戶支出 ${formatMoney(totals.spendingWithdrawals)}`
+    );
+  }
+
+  if (totals.depositActions > 0) {
+    parts.push(`${totals.depositActions} 筆存入`);
+  }
+
+  if (totals.withdrawalActions > 0) {
+    parts.push(`${totals.withdrawalActions} 筆轉出`);
+  }
+
+  if (totals.spendingActions > 0) {
+    parts.push(`${totals.spendingActions} 筆支出來源`);
+  }
+
+  return parts.join("；");
+}
+
+function applyCurrentRecommendations() {
+  const result = buildRecommendations();
+
+  if (!result.actions.length) {
+    setNotice("目前沒有可套用的配置建議。", "info");
+    return;
+  }
+
+  const totals = recommendationApplyTotals(result);
+  const summary = recommendationApplySummary(result);
+  const confirmed = window.confirm(
+    `確定已在銀行端完成以下操作，並更新本工具餘額？\n\n${summary}`
+  );
+
+  if (!confirmed) return;
+
+  const balanceChanges = new Map();
+
+  result.actions.forEach(action => {
+    const current = balanceChanges.get(action.plan.id) || 0;
+    const delta = action.type === "deposit"
+      ? action.amount
+      : -action.amount;
+    balanceChanges.set(action.plan.id, current + delta);
+  });
+
+  selections.forEach(selection => {
+    const delta = balanceChanges.get(selection.planId) || 0;
+    selection.balance = Math.max(
+      0,
+      Math.round(Number(selection.balance) + delta),
+    );
+  });
+
+  // Only deposits sourced from the unallocated-cash pool reduce that field.
+  // Transfers between configured accounts do not change total cash on hand.
+  unallocatedCash = result.unassignedCash;
+  document.getElementById("unallocatedCash").value =
+    formatSignedInputMoney(unallocatedCash);
+
+  saveState();
+  renderAll();
+
+  const completed = [];
+  if (totals.unallocatedDeposits > 0) {
+    completed.push(
+      `已配置 ${formatMoney(totals.unallocatedDeposits)} 待配置現金`
+    );
+  }
+  if (totals.rebalancingTransfers > 0) {
+    completed.push(
+      `已重新配置 ${formatMoney(totals.rebalancingTransfers)} 帳戶資金`
+    );
+  }
+  if (totals.spendingWithdrawals > 0) {
+    completed.push(
+      `已從帳戶扣除 ${formatMoney(totals.spendingWithdrawals)} 支出`
+    );
+  }
+
+  setNotice(
+    `${completed.join("；")}。帳戶餘額、級距使用與預估年息已更新。`,
+    "success",
+  );
 }
 
 function renderRecommendations() {
   const wrapper = document.getElementById("recommendationList");
   const empty = document.getElementById("recommendationEmpty");
   const unassigned = document.getElementById("unassignedCash");
+  const applyBar = document.getElementById("recommendationApplyBar");
+  const applySummary = document.getElementById("recommendationApplySummary");
+  const applyButton = document.getElementById("applyRecommendations");
   const result = buildRecommendations();
 
-  empty.hidden = result.actions.length > 0;
+  const hasActions = result.actions.length > 0;
+  empty.hidden = hasActions;
+  applyBar.hidden = !hasActions;
+  applyButton.disabled = !hasActions;
+  applySummary.textContent = hasActions
+    ? recommendationApplySummary(result)
+    : "";
 
-  wrapper.innerHTML = result.actions.map((item, index) => {
-    if (item.type === "withdraw") {
-      return `
-        <article class="recommendation-item plan-recommendation withdrawal-recommendation">
-          <span class="recommendation-rank">−</span>
-          <div class="recommendation-name">
-            <strong>${escapeHtml(item.plan.bankName)}</strong>
-            <span>${escapeHtml(item.plan.label)}｜牌告超額轉出</span>
-          </div>
-          <div class="recommendation-rate">
-            <span>目前牌告利率</span>
-            <strong>${formatRate(item.rate)}</strong>
-          </div>
-          <div class="recommendation-amount">
-            <span>建議轉出</span>
-            <strong>${signedMoney(-item.amount)}</strong>
-          </div>
-          <div class="recommendation-target">
-            <span>轉出後帳戶餘額</span>
-            <strong>${formatMoney(item.targetBalance)}</strong>
-          </div>
-          <div class="recommendation-interest">
-            <span>用途</span>
-            <strong>改放更高利率級距</strong>
-          </div>
-        </article>
-      `;
-    }
+wrapper.innerHTML = result.actions.map((item, index) => {
+  if (item.type === "spend") {
+    const rateText = item.rate == null
+      ? "利率未確認"
+      : formatRate(item.rate);
+    const interestText = item.lostInterest == null
+      ? "無法估算"
+      : `約 ${formatMoney(item.lostInterest)}`;
+
+    return `
+      <article class="recommendation-item plan-recommendation spending-recommendation">
+        <span class="recommendation-rank">−</span>
+        <div class="recommendation-name">
+          <strong>${escapeHtml(item.plan.bankName)}</strong>
+          <span>${escapeHtml(item.plan.label)}｜${escapeHtml(item.sourceLabel)}</span>
+        </div>
+        <div class="recommendation-rate">
+          <span>目前邊際利率</span>
+          <strong>${escapeHtml(rateText)}</strong>
+        </div>
+        <div class="recommendation-amount">
+          <span>建議支出／提款</span>
+          <strong>${signedMoney(-item.amount)}</strong>
+        </div>
+        <div class="recommendation-target">
+          <span>支出後帳戶餘額</span>
+          <strong>${formatMoney(item.targetBalance)}</strong>
+        </div>
+        <div class="recommendation-interest">
+          <span>減少預估年息</span>
+          <strong>${escapeHtml(interestText)}</strong>
+        </div>
+      </article>
+    `;
+  }
+
+if (item.type === "withdraw") {
+  const sourceRateText = item.rate == null
+    ? "利率未確認"
+    : formatRate(item.rate);
+  const destinationText = item.destinationPlan
+    ? `${item.destinationPlan.bankName} ${item.destinationTier?.displayLabel || ""} ${formatRate(item.destinationRate)}`
+    : "更高利率級距";
+  const gainText = item.annualInterestGain == null
+    ? "年息改善無法估算"
+    : `預估增加年息約 ${formatMoney(item.annualInterestGain)}`;
+
+  return `
+    <article class="recommendation-item plan-recommendation withdrawal-recommendation">
+      <span class="recommendation-rank">−</span>
+      <div class="recommendation-name">
+        <strong>${escapeHtml(item.plan.bankName)}</strong>
+        <span>${escapeHtml(item.plan.label)}｜${escapeHtml(item.sourceLabel)} 轉出</span>
+      </div>
+      <div class="recommendation-rate">
+        <span>目前邊際利率</span>
+        <strong>${escapeHtml(sourceRateText)}</strong>
+      </div>
+      <div class="recommendation-amount">
+        <span>建議轉出</span>
+        <strong>${signedMoney(-item.amount)}</strong>
+      </div>
+      <div class="recommendation-target">
+        <span>轉出後帳戶餘額</span>
+        <strong>${formatMoney(item.targetBalance)}</strong>
+      </div>
+      <div class="recommendation-interest">
+        <span>轉入目標</span>
+        <strong>${escapeHtml(destinationText)}</strong>
+        <small>${escapeHtml(gainText)}</small>
+      </div>
+    </article>
+  `;
+}
 
     return `
       <article class="recommendation-item plan-recommendation">
@@ -1280,6 +1840,10 @@ function renderRecommendations() {
   if (result.unassignedCash > 0) {
     messages.push(
       `仍有 ${formatMoney(result.unassignedCash)} 待配置現金尚未分配。`
+    );
+  } else if (result.unassignedCash < 0) {
+    messages.push(
+      `仍有 ${formatMoney(Math.abs(result.unassignedCash))} 支出需求無法由目前已選帳戶支應。`
     );
   }
 
@@ -1372,7 +1936,7 @@ function buildExportPayload() {
   };
 
   if (persistBalances) payload.p = 1;
-  if (unallocatedCash > 0) payload.u = unallocatedCash;
+  if (unallocatedCash !== 0) payload.u = unallocatedCash;
 
   return payload;
 }
@@ -1482,7 +2046,7 @@ function validateImportedPayload(payload) {
   const equivalentBanks = [];
   const conservativeBanks = [];
   const movedBanks = [];
-  let recoveredUnallocated = parseMoney(payload.u);
+  let recoveredUnallocated = parseSignedMoney(payload.u);
 
   for (const rawRecord of payload.s) {
     const record = parseImportRecord(rawRecord, payload.v);
@@ -1560,7 +2124,7 @@ async function importAllocatorFile(file) {
 
   if (
     !imported.selections.length &&
-    imported.unallocatedCash <= 0 &&
+    imported.unallocatedCash === 0 &&
     payload.s.length > 0
   ) {
     setNotice(
@@ -1576,7 +2140,7 @@ async function importAllocatorFile(file) {
 
   document.getElementById("persistBalances").checked = persistBalances;
   document.getElementById("unallocatedCash").value =
-    formatInputMoney(unallocatedCash);
+    formatSignedInputMoney(unallocatedCash);
 
   saveState();
   renderAll();
@@ -1713,8 +2277,27 @@ function bindControls() {
   });
 
   document.getElementById("unallocatedCash").addEventListener("input", event => {
-    unallocatedCash = parseMoney(event.target.value);
-    formatMoneyInputElement(event.target);
+    unallocatedCash = parseSignedMoney(event.target.value);
+    formatSignedMoneyInputElement(event.target);
+    saveState();
+    renderSummary();
+    renderRecommendations();
+  });
+
+  document.getElementById("toggleCashSign").addEventListener("click", () => {
+    const input = document.getElementById("unallocatedCash");
+
+    if (unallocatedCash === 0) {
+      input.value = "-";
+      input.focus();
+      try {
+        input.setSelectionRange(1, 1);
+      } catch {}
+      return;
+    }
+
+    unallocatedCash = -unallocatedCash;
+    input.value = formatSignedInputMoney(unallocatedCash);
     saveState();
     renderSummary();
     renderRecommendations();
@@ -1732,6 +2315,11 @@ function bindControls() {
       await importAllocatorFile(file);
       event.target.value = "";
     },
+  );
+
+  document.getElementById("applyRecommendations").addEventListener(
+    "click",
+    applyCurrentRecommendations,
   );
 
   document.getElementById("resetAllocator").addEventListener(

@@ -1731,3 +1731,136 @@ body{
 
   .comparison-table col.col-select{width:38px}
 }
+
+
+/* v22 apply NEXT DEPOSIT recommendations */
+.recommendation-apply-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-top:14px;
+  padding:14px 15px;
+  border:1px solid #a9d9ba;
+  border-radius:13px;
+  background:linear-gradient(135deg,#f0fcf4,#f6fff9);
+}
+
+.recommendation-apply-bar[hidden]{
+  display:none;
+}
+
+.recommendation-apply-bar > div{
+  display:grid;
+  gap:3px;
+}
+
+.recommendation-apply-bar strong{
+  color:#086b3a;
+}
+
+.recommendation-apply-bar span{
+  color:#4d6a59;
+  font-size:.82rem;
+}
+
+.recommendation-apply-bar button{
+  flex:0 0 auto;
+  min-height:42px;
+  padding:10px 15px;
+  border:1px solid #08783c;
+  border-radius:10px;
+  background:#08783c;
+  color:#fff;
+  font:inherit;
+  font-weight:850;
+  cursor:pointer;
+}
+
+.recommendation-apply-bar button:hover{
+  background:#056532;
+}
+
+.recommendation-apply-bar button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+@media(max-width:680px){
+  .recommendation-apply-bar{
+    align-items:stretch;
+    flex-direction:column;
+  }
+
+  .recommendation-apply-bar button{
+    width:100%;
+  }
+}
+
+
+/* v23 negative NEXT DEPOSIT values and spending sources */
+.signed-money-input{
+  position:relative;
+}
+
+.signed-money-input input{
+  padding-right:48px;
+}
+
+.cash-sign-toggle{
+  align-self:stretch;
+  min-width:42px;
+  padding:0 10px;
+  border:0;
+  border-left:1px solid #cfd7e6;
+  background:#f5f7ff;
+  color:#3156a3;
+  font:inherit;
+  font-size:1.05rem;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.cash-sign-toggle:hover{
+  background:#eaf0ff;
+}
+
+.cash-sign-help{
+  grid-column:2;
+  display:block;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:.75rem;
+}
+
+.spending-recommendation{
+  border-color:#e9b36c;
+  background:#fff8ec;
+}
+
+.spending-recommendation .recommendation-rank{
+  background:#a85b00;
+}
+
+.spending-recommendation .recommendation-amount strong{
+  color:#a34e00;
+}
+
+.spending-recommendation .recommendation-interest strong{
+  color:#7a551d;
+}
+
+@media(max-width:760px){
+  .cash-sign-help{
+    grid-column:1;
+  }
+}
+
+
+/* v24 general current-allocation optimization */
+.withdrawal-recommendation .recommendation-interest small{
+  display:block;
+  margin-top:3px;
+  color:#8a3d37;
+  font-size:.72rem;
+}
