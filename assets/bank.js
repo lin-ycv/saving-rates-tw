@@ -207,7 +207,7 @@ function renderDetailFields(bank, reportDate) {
     ["其他福利", bank.benefits],
     ["本期變動", bank.change],
     ["限制與注意事項", bank.notes],
-    ["查核日期", reportDate],
+    ["查核日期", bank.checked_date || reportDate],
   ];
 
   return fields.map(([label, value], index) => {
