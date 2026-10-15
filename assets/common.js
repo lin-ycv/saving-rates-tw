@@ -40,16 +40,22 @@ export function verificationGroup(bank) {
 }
 
 export function allSources(bank) {
-  return [
-    ...(bank.sources || []).map(source => ({ ...source, thirdParty: false })),
-    ...(bank.third_party_sources || []).map(source => ({ ...source, thirdParty: true })),
-  ];
+  // Keep one clickable link per URL and preserve third-party disclosure even
+  // when a fallback was also copied into the main sources array.
+  const unique = new Map();
+  for (const source of bank.sources || []) {
+    if (source?.url) unique.set(source.url, { ...source, thirdParty: false });
+  }
+  for (const source of bank.third_party_sources || []) {
+    if (source?.url) unique.set(source.url, { ...source, thirdParty: true });
+  }
+  return [...unique.values()];
 }
 
 export function rateBadge(verified) {
   return verified
     ? '<span class="rate-source official">官方確認</span>'
-    : '<span class="rate-source third">第三方・未驗證</span>';
+    : '<span class="rate-source third">未驗證／參考值</span>';
 }
 
 export function splitClauses(value) {

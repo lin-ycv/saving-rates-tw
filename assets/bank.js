@@ -14,11 +14,21 @@ function amountLabel(amount) {
 }
 
 function buildComboChart(diagram) {
-  const tiers = diagram.tiers || [];
-  const total = tiers.reduce(
-    (sum, tier) => sum + Number(tier.range_amount || 0),
+  const originalTiers = diagram.tiers || [];
+  // Unlimited tiers are represented as null in data.json, not a fake cap.
+  // Only the SVG needs a bounded illustration; the allocator uses null as
+  // genuine unlimited capacity and never reads the chart widths.
+  const finiteTotal = originalTiers.reduce(
+    (sum, tier) => sum + (Number(tier.range_amount) > 0 ? Number(tier.range_amount) : 0),
     0,
   );
+  const illustrativeWidth = Math.min(1000000, Math.max(500000, finiteTotal));
+  const tiers = originalTiers.map(tier => ({
+    ...tier,
+    chartAmount: Number(tier.range_amount) > 0 ? Number(tier.range_amount) : illustrativeWidth,
+    illustrative: !(Number(tier.range_amount) > 0),
+  }));
+  const total = tiers.reduce((sum, tier) => sum + tier.chartAmount, 0);
   if (!tiers.length || total <= 0) return "";
 
   const verified = diagram.verified !== false;
@@ -31,7 +41,7 @@ function buildComboChart(diagram) {
     let weighted = 0;
 
     for (const tier of tiers) {
-      const used = Math.min(remaining, Number(tier.range_amount));
+      const used = Math.min(remaining, tier.chartAmount);
       weighted += used * Number(tier.rate);
       remaining -= used;
       if (remaining <= 0) break;
@@ -81,7 +91,7 @@ function buildComboChart(diagram) {
 
   tiers.forEach((tier, index) => {
     const start = cursor;
-    const end = cursor + Number(tier.range_amount);
+    const end = cursor + tier.chartAmount;
     cursor = end;
 
     const x = xPosition(start);
@@ -94,9 +104,9 @@ function buildComboChart(diagram) {
 
     bars.push(`<rect class="tier-bar" x="${x}" y="${y}" width="${Math.max(segmentWidth, 1)}" height="${segmentHeight}" fill="${fill}" rx="4"/>`);
     bars.push(`<text class="bar-rate-label" x="${x+segmentWidth/2}" y="${Math.max(y-8, top+14)}" text-anchor="middle">${Number(tier.rate)}%</text>`);
-    bars.push(`<text class="bar-range-label" x="${x+segmentWidth/2}" y="${baseline-9}" text-anchor="middle">${escapeHtml(tier.range_label)}</text>`);
+    bars.push(`<text class="bar-range-label" x="${x+segmentWidth/2}" y="${baseline-9}" text-anchor="middle">${escapeHtml(tier.illustrative ? '無上限（示意）' : tier.range_label)}</text>`);
 
-    weightedSum += Number(tier.range_amount) * Number(tier.rate);
+    weightedSum += tier.chartAmount * Number(tier.rate);
     const effective = weightedSum / end;
     boundaryPoints.push(`<circle class="effective-point" cx="${xPosition(end)}" cy="${yPosition(effective)}" r="5"/>`);
     boundaryPoints.push(`<text class="effective-label" x="${xPosition(end)}" y="${yPosition(effective)-11}" text-anchor="middle">${effective.toFixed(2)}%</text>`);
@@ -107,7 +117,7 @@ function buildComboChart(diagram) {
     .join(" ");
   const overall = tiers.reduce(
     (sum, tier) =>
-      sum + Number(tier.range_amount) * Number(tier.rate),
+      sum + tier.chartAmount * Number(tier.rate),
     0,
   ) / total;
 
@@ -134,7 +144,7 @@ function buildComboChart(diagram) {
         <span><i class="key-line"></i>累積／有效利率</span>
         ${verified ? "" : '<span class="unverified-key">含未確認資料／示意範圍</span>'}
       </div>
-      <p class="combo-caption">存滿圖示範圍時，整體加權平均約為 <strong>${overall.toFixed(2)}%</strong>。</p>
+      <p class="combo-caption">${tiers.some(tier => tier.illustrative) ? '圖中「無上限」級距僅為顯示用示意寬度，不代表銀行額度上限。' : ''} 存滿圖示範圍時，整體加權平均約為 <strong>${overall.toFixed(2)}%</strong>。</p>
     </div>
   `;
 }
@@ -223,7 +233,8 @@ function renderDetailFields(bank, reportDate) {
 }
 
 function renderSources(bank) {
-  const official = (bank.sources || []).map(source => `
+  const fallbackUrls = new Set((bank.third_party_sources || []).map(source => source.url));
+  const official = (bank.sources || []).filter(source => !fallbackUrls.has(source.url)).map(source => `
     <li>
       <a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">
         ${escapeHtml(source.label)}
@@ -242,7 +253,7 @@ function renderSources(bank) {
   return `
     <section class="detail-card sources">
       <h2>官方資料來源</h2>
-      <ul>${official}</ul>
+      ${official ? `<ul>${official}</ul>` : '<p class="intro">本期未取得可讀的官方數值頁；以下明確列示第三方備援來源。</p>'}
       ${thirdParty
         ? `<h2 style="margin-top:24px">第三方暫補來源</h2><ul>${thirdParty}</ul>`
         : ""}

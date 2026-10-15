@@ -181,6 +181,10 @@ function hashString(value) {
 }
 
 function isPostedRateTier(tier) {
+  // An explicit per-tier economic classification prevents '牌告＋加碼'
+  // from being mistaken for a plain posted rate and excluded from allocation.
+  if (tier.rate_kind === "promotional") return false;
+  if (tier.rate_kind === "posted") return true;
   const text = [
     tier.range_label,
     tier.note,
@@ -302,6 +306,8 @@ function createPlan(bank, diagram, diagramIndex) {
     .filter(tier => tier.capacityMode === "finite")
     .reduce((sum, tier) => sum + tier.capacity, 0);
 
+  const minInterestBalance = Math.max(0, Number(diagram.min_interest_balance) || 0);
+
   const economicSignature = tiers.map(tier => {
     const mode = tier.capacityMode === "finite"
       ? `f${tier.capacity}`
@@ -310,7 +316,7 @@ function createPlan(bank, diagram, diagramIndex) {
         : "x";
     const overflow = tier.isTrailingPostedOverflow ? "p" : "";
     return `${mode}@${Number(tier.rate)}${overflow}`;
-  }).join("|");
+  }).join("|") + `|min=${minInterestBalance}`;
 
   const id = `${bank.slug}::${diagramIndex}`;
   const fingerprint = hashString(JSON.stringify({
@@ -320,6 +326,7 @@ function createPlan(bank, diagram, diagramIndex) {
     label: diagram.label,
     description: diagram.description,
     verified: diagram.verified !== false,
+    minInterestBalance,
     tiers: diagram.tiers,
     postedOverflowStart: trailingPostedStart,
   }));
@@ -331,6 +338,7 @@ function createPlan(bank, diagram, diagramIndex) {
     label: diagram.label,
     description: diagram.description,
     verified: diagram.verified !== false,
+    minInterestBalance,
     tiers,
     recommendationTiers,
     capacityMode,
@@ -718,6 +726,17 @@ function calculatePlanInterest(plan, balance) {
 
   if (remaining > 0) overAmount += remaining;
 
+  // A minimum interest-bearing account balance applies to the WHOLE account,
+  // not just a single tier. Bank-announced percentages are not earned before
+  // this threshold, even if an early tier nominally carries a high rate.
+  if (balance > 0 && balance < plan.minInterestBalance) {
+    annualInterest = 0;
+    postedOverflowInterest = 0;
+    for (const entry of allocations) {
+      if (entry.interest !== null) entry.interest = 0;
+    }
+  }
+
   const complete = unknownAmount === 0 && overAmount === 0;
   const effectiveRate = knownPrincipal > 0
     ? annualInterest / knownPrincipal * 100
@@ -894,7 +913,15 @@ function renderSelections() {
 
   empty.hidden = selections.length > 0;
 
-  wrapper.innerHTML = selections.map(selection => {
+  // Sort the visible account cards by their displayed "最高" plan rate.
+  // Do not reorder selections: storage, exports, and balances retain their
+  // original plan IDs and order, and typing in a balance field keeps focus.
+  const sortedSelections = [...selections].sort((a, b) =>
+    (plansById.get(b.planId)?.maxRate ?? -1) -
+    (plansById.get(a.planId)?.maxRate ?? -1)
+  );
+
+  wrapper.innerHTML = sortedSelections.map(selection => {
     const plan = plansById.get(selection.planId);
     const calculation = calculatePlanInterest(plan, selection.balance);
     const status = planStatus(plan, calculation);
@@ -1097,6 +1124,7 @@ function nextRecommendationSegment(plan, balance) {
           plan,
           tier,
           available: tier.capacity - remainingBalance,
+          minimumToActivate: Math.max(0, plan.minInterestBalance - balance),
           rate: tier.rate,
         };
       }
@@ -1109,6 +1137,7 @@ function nextRecommendationSegment(plan, balance) {
         plan,
         tier,
         available: Infinity,
+        minimumToActivate: Math.max(0, plan.minInterestBalance - balance),
         rate: tier.rate,
       };
     }
@@ -1135,7 +1164,8 @@ function allocateMarginalPool({
         const plan = plansById.get(selection.planId);
         const balance = virtualBalances.get(plan.id) || 0;
         const segment = nextRecommendationSegment(plan, balance);
-        if (!segment || segment.rate <= minimumRate + RATE_EPSILON) {
+        if (!segment || segment.rate <= minimumRate + RATE_EPSILON ||
+          segment.minimumToActivate > remaining) {
           return null;
         }
         return {
@@ -1162,7 +1192,9 @@ function allocateMarginalPool({
     if (depositAmount <= 0) break;
 
     const targetBalance = best.balance + depositAmount;
-    const addedInterest = depositAmount * best.rate / 100;
+    const addedInterest =
+      calculatePlanInterest(best.plan, targetBalance).annualInterest -
+      calculatePlanInterest(best.plan, best.balance).annualInterest;
 
     deposits.push({
       type: "deposit",
@@ -1332,7 +1364,8 @@ function buildSpendingRecommendations() {
     const targetBalance = best.balance - amount;
     const lostInterest = best.rate == null
       ? null
-      : amount * best.rate / 100;
+      : calculatePlanInterest(best.plan, best.balance).annualInterest -
+        calculatePlanInterest(best.plan, targetBalance).annualInterest;
 
     actions.push({
       type: "spend",
@@ -1408,6 +1441,10 @@ function buildCurrentAllocationRebalancing(virtualBalances) {
     sources.forEach(source => {
       destinations.forEach(destination => {
         if (source.plan.id === destination.plan.id) return;
+        // Moving a fraction that cannot reach the account's起息門檻
+        // would produce a misleading marginal-rate recommendation.
+        if (destination.minimumToActivate >
+          Math.min(source.available, source.balance, destination.available)) return;
 
         if (
           destination.rate <=
@@ -1468,15 +1505,15 @@ function buildCurrentAllocationRebalancing(virtualBalances) {
       best.destination.balance + amount;
     const sourceRate = best.source.rate;
     const addedInterest =
-      amount * best.destination.rate / 100;
+      calculatePlanInterest(best.destination.plan, destinationTarget).annualInterest -
+      calculatePlanInterest(best.destination.plan, best.destination.balance).annualInterest;
     const previousInterest =
       sourceRate == null
         ? null
-        : amount * sourceRate / 100;
+        : calculatePlanInterest(best.source.plan, best.source.balance).annualInterest -
+          calculatePlanInterest(best.source.plan, sourceTarget).annualInterest;
     const annualInterestGain =
-      previousInterest == null
-        ? null
-        : addedInterest - previousInterest;
+      previousInterest == null ? null : addedInterest - previousInterest;
     const sourceLabel =
       best.source.label ||
       best.source.tier?.displayLabel ||
